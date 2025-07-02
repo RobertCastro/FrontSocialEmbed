@@ -5,9 +5,6 @@ import Script from 'next/script'
 export default function SocialWidget() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Include CSS files */}
-      <link rel="stylesheet" href="/social-widget/social-widget.css" />
-      
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -184,7 +181,7 @@ export default function SocialWidget() {
               >
                 <div className="text-center text-gray-500 py-8">
                   <p>🎯 Manual render widget</p>
-                  <small>Use the "Render Manual" button above to initialize</small>
+                  <small>Use the &quot;Render Manual&quot; button above to initialize</small>
                 </div>
               </div>
             </div>
@@ -278,6 +275,9 @@ export default function SocialWidget() {
           console.error('Failed to load Social Widget script:', e);
         }}
       />
+      
+      {/* Load Social Widget CSS */}
+      <link rel="stylesheet" href="/social-widget/social-widget.css" />
     </div>
   )
 }
