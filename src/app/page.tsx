@@ -49,9 +49,9 @@ export default function Home() {
               <button className="bg-pink-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-pink-700 transition-colors">
                 Comenzar Gratis
               </button>
-              <button className="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
-                Ver Demo
-              </button>
+              <a href="/social-widget" className="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
+                Ver demo
+              </a>
             </div>
           </div>
         </div>

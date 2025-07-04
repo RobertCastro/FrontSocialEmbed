@@ -86,12 +86,12 @@ export default function SocialWidget() {
               Social Widget Demo
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-              Aquí puedes ver el widget social en acción, conectando con datos reales desde ccpapp.xyz
+              {/* Aquí puedes ver el widget social en acción, conectando con datos reales desde ccpapp.xyz */}
             </p>
             
             {/* Debug Controls */}
             <div className="flex flex-wrap gap-4 justify-center mb-8 p-4 bg-gray-50 rounded-lg">
-              <button 
+              {/* <button 
                 className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm"
                 onClick={() => {
                   if (typeof window !== 'undefined' && (window as any).SocialWidget) {
@@ -126,9 +126,9 @@ export default function SocialWidget() {
                 }}
               >
                 🗑️ Limpiar
-              </button>
+              </button> */}
               
-              <button 
+              {/* <button 
                 className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition-colors text-sm"
                 onClick={() => {
                   // Test API directly
@@ -145,14 +145,14 @@ export default function SocialWidget() {
                 }}
               >
                 🔍 Test API
-              </button>
+              </button> */}
             </div>
           </div>
 
           {/* Auto-discovery Widget */}
           <div className="mb-16">
             <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-              🤖 Auto-Discovery Mode (como EmbedSocial)
+              {/* 🤖 Auto-Discovery Mode (como EmbedSocial) */}
             </h3>
             <div className="max-w-4xl mx-auto">
               <div 
