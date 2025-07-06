@@ -158,7 +158,7 @@ export default function SocialWidget() {
               <div 
                 id="auto-widget-test"
                 className="social-widget border-2 border-dashed border-gray-300 min-h-[300px] rounded-lg p-4"
-                data-widget-id="1"
+                data-widget-id="3"
               >
                 {/* Widget will auto-initialize here */}
                 <div className="text-center text-gray-500 py-8">
