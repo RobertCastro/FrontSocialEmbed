@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link'
 import Script from 'next/script'
+import '/public/social-widget/social-widget.css'
 
 export default function SocialWidget() {
   return (
@@ -279,9 +280,6 @@ export default function SocialWidget() {
           console.error('Failed to load Social Widget script:', e);
         }}
       />
-      
-      {/* Load Social Widget CSS */}
-      <link rel="stylesheet" href="/social-widget/social-widget.css" />
     </div>
   )
 }

@@ -65,7 +65,7 @@ export default function DataDeletionPolicy() {
           </p>
           <ul className="list-disc pl-6 space-y-2">
             <li>Enviar un correo electrónico a <a href="mailto:soporte@ccpapp.xyz" className="text-pink-600 underline">soporte@ccpapp.xyz</a></li>
-            <li>Incluir "Solicitud de Eliminación de Datos" en el asunto</li>
+            <li>Incluir &quot;Solicitud de Eliminación de Datos&quot; en el asunto</li>
             <li>Proporcionar su dirección de correo electrónico registrada</li>
             <li>Especificar qué datos desea eliminar</li>
           </ul>
