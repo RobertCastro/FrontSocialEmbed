@@ -30,6 +30,9 @@ export default function SocialWidget() {
               <Link href="/privacy-policy" className="text-sm text-gray-500 hover:text-gray-700">
                 Privacidad
               </Link>
+              <Link href="/politica-de-eliminacion-de-datos-de-usuario" className="text-sm text-gray-500 hover:text-gray-700">
+                Datos
+              </Link>
             </div>
           </div>
         </div>
@@ -253,6 +256,7 @@ export default function SocialWidget() {
               <ul className="space-y-2 text-gray-400">
                 <li><Link href="/terms-of-service" className="hover:text-white transition-colors">Términos de Servicio</Link></li>
                 <li><Link href="/privacy-policy" className="hover:text-white transition-colors">Política de Privacidad</Link></li>
+                <li><Link href="/politica-de-eliminacion-de-datos-de-usuario" className="hover:text-white transition-colors">Eliminación de Datos</Link></li>
               </ul>
             </div>
           </div>
