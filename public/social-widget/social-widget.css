@@ -134,6 +134,46 @@
     text-align: center;
   }
   
+  /* ===== WIDGET HEADER CUSTOM ===== */
+  .sw-custom-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    color: #222;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 20px 24px;
+  }
+  .sw-header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .sw-account-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #222;
+  }
+  .sw-header-right {
+    margin-left: auto;
+  }
+  .sw-follow-btn {
+    background: #3f1866;
+    color: #fff;
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(63,24,102,0.08);
+  }
+  .sw-follow-btn:hover {
+    background: #5e239d;
+  }
+  
   /* ===== GRID CONTAINER ===== */
   
   .sw-grid-container {
@@ -238,6 +278,93 @@
   
   .sw-post-item:hover .sw-post-overlay {
     opacity: 1;
+  }
+  
+  /* ===== POST INFOBAR (BOTTOM) ===== */
+  .sw-post-infobar {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(0deg, rgba(0,0,0,0.75) 80%, rgba(0,0,0,0.0) 100%);
+    color: #fff;
+    padding: 14px 16px 10px 16px;
+    z-index: 2;
+    font-size: 1rem;
+    min-height: 48px;
+    gap: 10px;
+  }
+  .sw-post-logo {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  .sw-post-user {
+    font-weight: 600;
+    margin-right: 10px;
+    color: #fff;
+  }
+  .sw-post-time {
+    font-size: 0.95em;
+    color: #e0e0e0;
+    margin-right: 10px;
+  }
+  .sw-post-platform {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* ===== POST OVERLAY HOVER CUSTOM ===== */
+  .sw-custom-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.72);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 3;
+    text-align: center;
+    padding: 24px 12px 18px 12px;
+  }
+  .sw-post-item:hover .sw-custom-overlay {
+    opacity: 1;
+  }
+  .sw-overlay-center {
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.85;
+  }
+  .sw-overlay-center svg {
+    width: 48px;
+    height: 48px;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.18));
+  }
+  .sw-overlay-desc {
+    color: #fff;
+    font-size: 1.08rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    max-width: 90%;
+  }
+  .sw-overlay-user {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
   }
   
   /* ===== PLATFORM ICON ===== */

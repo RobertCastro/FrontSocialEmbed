@@ -100,15 +100,22 @@
             const widgetWrapper = document.createElement('div');
             widgetWrapper.className = 'sw-widget-wrapper';
             
-            // Create header if title exists
-            if (widget.settings && widget.settings.title) {
-                const header = document.createElement('div');
-                header.className = 'sw-widget-header';
-                header.innerHTML = `<h3 class="sw-widget-title">${widget.settings.title}</h3>`;
-                widgetWrapper.appendChild(header);
-            }
+            // --- HEADER ---
+            const header = document.createElement('div');
+            header.className = 'sw-widget-header sw-custom-header';
+            // Icono de red
+            const iconSVG = account.platform === 'tiktok'
+                ? `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="12" fill="#000"/><path d="M28.5 15.5c-2.2 0-4-1.8-4-4V9h-3.1v15.2c0 1.7-1.4 3.1-3.1 3.1s-3.1-1.4-3.1-3.1 1.4-3.1 3.1-3.1c.2 0 .4 0 .6.1v-3.2c-.2 0-.4-.1-.6-.1-3.5 0-6.3 2.8-6.3 6.3s2.8 6.3 6.3 6.3 6.3-2.8 6.3-6.3V19c1.1.7 2.4 1.1 3.7 1.1h.6v-4.6h-.6z" fill="#fff"/></svg>`
+                : `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="12" fill="url(#ig)"/><defs><linearGradient id="ig" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#f09433"/><stop offset="0.25" stop-color="#e6683c"/><stop offset="0.5" stop-color="#dc2743"/><stop offset="0.75" stop-color="#cc2366"/><stop offset="1" stop-color="#bc1888"/></linearGradient></defs><path d="M20 13.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zm0 10.7a4.2 4.2 0 1 1 0-8.4 4.2 4.2 0 0 1 0 8.4zm7.2-10.9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" fill="#fff"/></svg>`;
+            const accountName = `<span class="sw-account-name">${account.displayName || account.username}</span>`;
+            const followUrl = account.platform === 'tiktok'
+                ? `https://www.tiktok.com/@${account.username}`
+                : `https://instagram.com/${account.username}`;
+            const followBtn = `<a href="${followUrl}" target="_blank" rel="noopener" class="sw-follow-btn">Síguenos</a>`;
+            header.innerHTML = `<div class="sw-header-left">${iconSVG}${accountName}</div><div class="sw-header-right">${followBtn}</div>`;
+            widgetWrapper.appendChild(header);
 
-            // Create grid container
+            // --- GRID ---
             const gridContainer = document.createElement('div');
             gridContainer.className = 'sw-grid-container';
             
@@ -129,7 +136,7 @@
             // Render posts
             if (posts && posts.length > 0) {
                 posts.forEach((post, index) => {
-                    const postElement = this.createPostElement(post, index);
+                    const postElement = this.createPostElement(post, index, account);
                     gridContainer.appendChild(postElement);
                 });
             } else {
@@ -158,7 +165,7 @@
             return widgetWrapper;
         },
 
-        createPostElement: function(post, index) {
+        createPostElement: function(post, index, account) {
             const postElement = document.createElement('div');
             postElement.className = 'sw-post-item';
             postElement.setAttribute('data-post-id', post.id);
@@ -193,35 +200,32 @@
             imageContainer.appendChild(image);
 
             // Create overlay with post info
+            const infoBar = document.createElement('div');
+            infoBar.className = 'sw-post-infobar';
+            // Logo de red
+            const iconSVG = account.platform === 'tiktok'
+                ? `<svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="12" fill="#000"/><path d="M28.5 15.5c-2.2 0-4-1.8-4-4V9h-3.1v15.2c0 1.7-1.4 3.1-3.1 3.1s-3.1-1.4-3.1-3.1 1.4-3.1 3.1-3.1c.2 0 .4 0 .6.1v-3.2c-.2 0-.4-.1-.6-.1-3.5 0-6.3 2.8-6.3 6.3s2.8 6.3 6.3 6.3 6.3-2.8 6.3-6.3V19c1.1.7 2.4 1.1 3.7 1.1h.6v-4.6h-.6z" fill="#fff"/></svg>`
+                : `<svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="12" fill="url(#ig)"/><defs><linearGradient id="ig" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#f09433"/><stop offset="0.25" stop-color="#e6683c"/><stop offset="0.5" stop-color="#dc2743"/><stop offset="0.75" stop-color="#cc2366"/><stop offset="1" stop-color="#bc1888"/></linearGradient></defs><path d="M20 13.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zm0 10.7a4.2 4.2 0 1 1 0-8.4 4.2 4.2 0 0 1 0 8.4zm7.2-10.9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" fill="#fff"/></svg>`;
+            // Nombre de usuario
+            const user = `<span class="sw-post-user">${account.username}</span>`;
+            // Tiempo relativo
+            const time = `<span class="sw-post-time">${this.timeAgo(post.timestamp)}</span>`;
+            // Logo de red a la derecha
+            const rightIcon = `<span class="sw-post-platform">${iconSVG}</span>`;
+            infoBar.innerHTML = `<span class="sw-post-logo">${iconSVG}</span>${user}${time}${rightIcon}`;
+            // --- Overlay hover ---
             const overlay = document.createElement('div');
-            overlay.className = 'sw-post-overlay';
-
-            // Platform icon
-            const platformIcon = document.createElement('div');
-            platformIcon.className = `sw-platform-icon sw-platform-${post.platform}`;
-            platformIcon.innerHTML = post.platform === 'tiktok' ? '🎵' : '📷';
-
-            // Post metrics
-            const metrics = document.createElement('div');
-            metrics.className = 'sw-post-metrics';
-            if (post.metrics) {
-                metrics.innerHTML = `
-                    <span class="sw-metric">👀 ${this.formatNumber(post.metrics.views || 0)}</span>
-                    <span class="sw-metric">❤️ ${this.formatNumber(post.metrics.likes || 0)}</span>
-                `;
-            }
-
-            overlay.appendChild(platformIcon);
-            overlay.appendChild(metrics);
+            overlay.className = 'sw-post-overlay sw-custom-overlay';
+            overlay.innerHTML = `<div class="sw-overlay-center">${iconSVG}</div><div class="sw-overlay-desc">${this.truncate(post.description || post.title || '', 60)}</div><div class="sw-overlay-user">${user}${iconSVG}</div>`;
 
             postElement.appendChild(imageContainer);
+            postElement.appendChild(infoBar);
             postElement.appendChild(overlay);
 
             // Add click handler for future lightbox functionality
             postElement.addEventListener('click', (e) => {
                 e.preventDefault();
                 utils.log(`Post clicked: ${post.id}`, 'info');
-                // TODO: Implement lightbox functionality
                 this.handlePostClick(post, postElement);
             });
 
@@ -243,6 +247,21 @@
             if (post.url) {
                 window.open(post.url, '_blank', 'noopener,noreferrer');
             }
+        },
+
+        timeAgo: function(dateString) {
+            const now = new Date();
+            const date = new Date(dateString);
+            const diff = Math.floor((now - date) / 1000);
+            if (diff < 60) return `${diff}s ago`;
+            if (diff < 3600) return `${Math.floor(diff/60)} min ago`;
+            if (diff < 86400) return `${Math.floor(diff/3600)} hours ago`;
+            if (diff < 2592000) return `${Math.floor(diff/86400)} days ago`;
+            return date.toLocaleDateString();
+        },
+
+        truncate: function(str, n) {
+            return str.length > n ? str.substr(0, n-1) + '…' : str;
         }
     };
 
