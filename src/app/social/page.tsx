@@ -83,81 +83,13 @@ export default function SocialWidget() {
       </section>
 
       {/* Widget Section */}
-      <section id="widget-section" className="py-20 bg-white">
+      <section id="widget-section" className="py-20 sw-widget-wrapper" >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Social Widget Demo
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-              {/* Aquí puedes ver el widget social en acción, conectando con datos reales desde ccpapp.xyz */}
-            </p>
-            
-            {/* Debug Controls */}
-            <div className="flex flex-wrap gap-4 justify-center mb-8 p-4 bg-gray-50 rounded-lg">
-              {/* <button 
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm"
-                onClick={() => {
-                  if (typeof window !== 'undefined' && (window as any).SocialWidget) {
-                    console.log('SocialWidget available:', (window as any).SocialWidget);
-                    (window as any).SocialWidget.init();
-                  } else {
-                    console.log('SocialWidget not loaded yet');
-                  }
-                }}
-              >
-                🔄 Reinicializar
-              </button>
-              
-              <button 
-                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors text-sm"
-                onClick={() => {
-                  if (typeof window !== 'undefined' && (window as any).SocialWidget) {
-                    (window as any).SocialWidget.render(1, '#manual-widget-test');
-                  }
-                }}
-              >
-                🎨 Render Manual
-              </button>
-              
-              <button 
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm"
-                onClick={() => {
-                  if (typeof window !== 'undefined' && (window as any).SocialWidget) {
-                    (window as any).SocialWidget.destroy('#auto-widget-test');
-                    (window as any).SocialWidget.destroy('#manual-widget-test');
-                  }
-                }}
-              >
-                🗑️ Limpiar
-              </button> */}
-              
-              {/* <button 
-                className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition-colors text-sm"
-                onClick={() => {
-                  // Test API directly
-                  fetch('https://app.ccpapp.xyz/social-widgets/render/1')
-                    .then(res => res.json())
-                    .then(data => {
-                      console.log('API Response:', data);
-                      alert('Check console for API response');
-                    })
-                    .catch(err => {
-                      console.error('API Error:', err);
-                      alert('API Error - check console');
-                    });
-                }}
-              >
-                🔍 Test API
-              </button> */}
-            </div>
           </div>
 
-          {/* Auto-discovery Widget */}
           <div className="mb-16">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-              {/* 🤖 Auto-Discovery Mode (como EmbedSocial) */}
-            </h3>
+         
             <div className="max-w-4xl mx-auto">
               <div 
                 id="auto-widget-test"
@@ -173,53 +105,9 @@ export default function SocialWidget() {
             </div>
           </div>
 
-          {/* Manual Render Widget */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-              ⚙️ Manual Render Mode
-            </h3>
-            <div className="max-w-4xl mx-auto">
-              <div 
-                id="manual-widget-test"
-                className="border-2 border-dashed border-gray-300 min-h-[300px] rounded-lg p-4"
-              >
-                <div className="text-center text-gray-500 py-8">
-                  <p>🎯 Manual render widget</p>
-                  <small>Use the &quot;Render Manual&quot; button above to initialize</small>
-                </div>
-              </div>
-            </div>
-          </div>
+         
 
-          {/* API Status Check */}
-          <div className="mt-16 max-w-2xl mx-auto">
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h4 className="text-lg font-semibold text-gray-800 mb-4 text-center">
-                🔗 API Status
-              </h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Backend:</span>
-                  <span className="font-mono text-blue-600">https://app.ccpapp.xyz</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Endpoint:</span>
-                  <span className="font-mono text-blue-600">/social-widgets/render/1</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Health Check:</span>
-                  <a 
-                    href="https://app.ccpapp.xyz/social-widgets/health" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="font-mono text-green-600 hover:underline"
-                  >
-                    /social-widgets/health
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </section>
 

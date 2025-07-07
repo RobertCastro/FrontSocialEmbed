@@ -113,10 +113,9 @@
   
   .sw-widget-wrapper {
     width: 100%;
-    background: #ffffff;
+    background: #f3f3f3;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
   
   /* ===== WIDGET HEADER ===== */
@@ -487,7 +486,6 @@
   @media (max-width: 480px) {
     .sw-widget-wrapper {
       border-radius: 6px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     }
     
     .sw-widget-header {
@@ -561,7 +559,6 @@
   /* ===== HIGH CONTRAST MODE ===== */
   @media (prefers-contrast: high) {
     .sw-widget-wrapper {
-      border: 2px solid #000;
     }
     
     .sw-post-item {
@@ -598,10 +595,6 @@
       color: #e2e8f0;
     }
     
-    .sw-widget-wrapper {
-      background: #1a202c;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
     
     .sw-grid-container {
       background: #1a202c;
