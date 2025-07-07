@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import Script from 'next/script'
 import '/public/social-widget/social-widget.css'
+import '/public/social-widget/social-widget-lightbox.css'
 
 export default function SocialWidget() {
   return (
@@ -166,6 +167,16 @@ export default function SocialWidget() {
         }}
         onError={(e) => {
           console.error('Failed to load Social Widget script:', e);
+        }}
+      />
+      <Script
+        src="/social-widget/social-widget-lightbox.js"
+        strategy="afterInteractive"
+        onLoad={() => {
+          console.log('Social Widget Lightbox script loaded');
+        }}
+        onError={(e) => {
+          console.error('Failed to load Social Widget Lightbox script:', e);
         }}
       />
     </div>

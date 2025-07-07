@@ -133,10 +133,11 @@
                 }
             }
 
-            // Render posts
+            this._currentPostsArr = posts;
+            this._currentAccountObj = account;
             if (posts && posts.length > 0) {
                 posts.forEach((post, index) => {
-                    const postElement = this.createPostElement(post, index, account);
+                    const postElement = this.createPostElement(post, index, account, posts);
                     gridContainer.appendChild(postElement);
                 });
             } else {
@@ -165,7 +166,7 @@
             return widgetWrapper;
         },
 
-        createPostElement: function(post, index, account) {
+        createPostElement: function(post, index, account, postsArr) {
             const postElement = document.createElement('div');
             postElement.className = 'sw-post-item';
             postElement.setAttribute('data-post-id', post.id);
@@ -225,8 +226,11 @@
             // Add click handler for future lightbox functionality
             postElement.addEventListener('click', (e) => {
                 e.preventDefault();
-                utils.log(`Post clicked: ${post.id}`, 'info');
-                this.handlePostClick(post, postElement);
+                if (window.SocialWidget && window.SocialWidget.Lightbox && typeof window.SocialWidget.Lightbox.open === 'function') {
+                    window.SocialWidget.Lightbox.open(index, this._currentPostsArr || [], this._currentAccountObj || {});
+                } else {
+                    this.handlePostClick(post, postElement);
+                }
             });
 
             return postElement;

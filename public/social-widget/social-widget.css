@@ -5,6 +5,29 @@
  * Author: Robert Castro
  */
 
+/* ===== SOCIAL WIDGET CSS VARIABLES ===== */
+:root {
+  --sw-bg: #f3f3f3;
+  --sw-modal-bg: #18181b;
+  --sw-overlay: rgba(0,0,0,0.7);
+  --sw-radius: 12px;
+  --sw-radius-sm: 6px;
+  --sw-accent: #5e239d;
+  --sw-accent-hover: #3f1866;
+  --sw-tiktok: #000;
+  --sw-instagram: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  --sw-white: #fff;
+  --sw-black: #000;
+  --sw-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  --sw-z-modal: 10000;
+  --sw-z-overlay: 9999;
+  --sw-z-widget: 1;
+  --sw-text-main: #222;
+  --sw-text-light: #fff;
+  --sw-text-muted: #888;
+  --sw-border: #e0e0e0;
+}
+
 /* ===== CSS RESET & BASE ===== */
 .social-widget {
     box-sizing: border-box;
@@ -140,7 +163,6 @@
     justify-content: space-between;
     background: #fff;
     color: #222;
-    border-bottom: 1px solid #f0f0f0;
     padding: 20px 24px;
   }
   .sw-header-left {
