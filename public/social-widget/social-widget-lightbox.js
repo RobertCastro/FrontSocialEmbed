@@ -68,7 +68,7 @@
         thumbnail.className = 'sw-tiktok-thumbnail';
         thumbnail.src = post.thumbnail;
         thumbnail.alt = post.title || '';
-        thumbnail.style.cssText = 'max-width: 100%; max-height: 100%; object-fit: contain;';
+        thumbnail.style.cssText = 'max-width: 100%; max-height: 100%;';
         
         const playButton = document.createElement('div');
         playButton.className = 'sw-tiktok-play-button';
