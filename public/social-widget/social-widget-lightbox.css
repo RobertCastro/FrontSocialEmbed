@@ -128,6 +128,17 @@
   margin-bottom: 18px;
   white-space: pre-line;
   word-break: break-word;
+  line-height: 1.5;
+}
+.sw-hashtag-link {
+  color: var(--sw-accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.sw-hashtag-link:hover {
+  color: var(--sw-accent-hover);
+  text-decoration: underline;
 }
 .sw-lightbox-platform {
   margin-top: auto;

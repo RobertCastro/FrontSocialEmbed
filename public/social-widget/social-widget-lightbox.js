@@ -103,7 +103,7 @@
       // Desc
       const desc = document.createElement('div');
       desc.className = 'sw-lightbox-desc';
-      desc.textContent = post.description || post.title || '';
+      desc.innerHTML = this.parseHashtags(post.description || post.title || '');
       // Platform (icon only in info)
       const platform = document.createElement('div');
       platform.className = 'sw-lightbox-platform';
@@ -133,6 +133,18 @@
       document.removeEventListener('keydown', this._keyHandler);
       this._keyHandler = this.handleKey.bind(this);
       document.addEventListener('keydown', this._keyHandler);
+    },
+    parseHashtags: function(text) {
+      if (!text) return '';
+      // Regex para detectar hashtags (#palabra)
+      const hashtagRegex = /#(\w+)/g;
+      return text.replace(hashtagRegex, (match, hashtag) => {
+        const platform = this.account?.platform || 'tiktok';
+        const baseUrl = platform === 'tiktok' 
+          ? 'https://www.tiktok.com/tag/'
+          : 'https://www.instagram.com/explore/tags/';
+        return `<a href="${baseUrl}${hashtag}" target="_blank" rel="noopener" class="sw-hashtag-link">${match}</a>`;
+      });
     },
     timeAgo: function(dateString) {
       const now = new Date();
