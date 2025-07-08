@@ -479,8 +479,7 @@
   
   .sw-widget-footer {
     padding: 12px 20px;
-    background: #f8f9fa;
-    border-top: 1px solid #e9ecef;
+    background: #FFFFFF;
     text-align: center;
   }
   
@@ -644,10 +643,6 @@
       background: #2d3748;
     }
     
-    .sw-widget-footer {
-      background: #2d3748;
-      border-top-color: #4a5568;
-    }
     
     .sw-metadata {
       color: #a0aec0;
