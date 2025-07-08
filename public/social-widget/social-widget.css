@@ -10,6 +10,7 @@
   --sw-bg: #f3f3f3;
   --sw-modal-bg: #18181b;
   --sw-overlay: rgba(0,0,0,0.7);
+  --sw-overlay-light: rgba(0,0,0,0.3);
   --sw-radius: 12px;
   --sw-radius-sm: 6px;
   --sw-accent: #5e239d;
@@ -17,6 +18,7 @@
   --sw-tiktok: #000;
   --sw-instagram: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   --sw-white: #fff;
+  --sw-white-light: #ffffff9a;
   --sw-black: #000;
   --sw-shadow: 0 2px 8px rgba(0,0,0,0.10);
   --sw-z-modal: 10000;

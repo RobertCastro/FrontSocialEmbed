@@ -76,11 +76,11 @@
       // Nav buttons (fixed to viewport sides)
       const navLeft = document.createElement('button');
       navLeft.className = 'sw-lightbox-nav sw-lightbox-nav-left';
-      navLeft.innerHTML = '&#8592;';
+      navLeft.innerHTML = '<svg class="es-prev-svg" width="16" height="28" viewBox="0 0 16 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2.03272L2 14.0327L14 26.0327" stroke="#d6dae4" stroke-opacity="0.8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
       navLeft.onclick = (e) => { e.stopPropagation(); this.prev(); };
       const navRight = document.createElement('button');
       navRight.className = 'sw-lightbox-nav sw-lightbox-nav-right';
-      navRight.innerHTML = '&#8594;';
+      navRight.innerHTML = '<svg class="es-next-svg" width="16" height="28" viewBox="0 0 16 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 26.0005L14 14.0005L2 2.00049" stroke="#d6dae4" stroke-opacity="0.8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
       navRight.onclick = (e) => { e.stopPropagation(); this.next(); };
       if (this.currentIndex > 0) overlay.appendChild(navLeft);
       if (this.currentIndex < this.posts.length - 1) overlay.appendChild(navRight);

@@ -59,13 +59,12 @@
   position: fixed;
   top: 32px;
   right: 40px;
-  background: var(--sw-white);
-  color: var(--sw-text-main);
+  background: var(--sw-overlay-light);
+  color: var(--sw-white-light);
   border: none;
   border-radius: 50%;
   width: 44px; height: 44px;
   font-size: 2rem;
-  font-weight: bold;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
   z-index: calc(var(--sw-z-modal) + 1);
@@ -75,7 +74,6 @@
   transition: background 0.2s;
 }
 .sw-lightbox-close:hover {
-  background: var(--sw-accent);
   color: var(--sw-white);
 }
 .sw-lightbox-nav {
@@ -83,7 +81,6 @@
   top: 50%;
   transform: translateY(-50%);
   width: 56px; height: 56px;
-  background: var(--sw-white);
   color: var(--sw-text-main);
   border: none;
   border-radius: 50%;
@@ -98,7 +95,6 @@
   transition: background 0.2s;
 }
 .sw-lightbox-nav:hover {
-  background: var(--sw-accent);
   color: var(--sw-white);
 }
 .sw-lightbox-nav-left { left: 24px; }
