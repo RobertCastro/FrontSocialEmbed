@@ -58,7 +58,41 @@
       // Media (image or video)
       const media = document.createElement('div');
       media.className = 'sw-lightbox-media';
-      if (post.type === 'VIDEO') {
+      if (post.type === 'VIDEO' && post.platform === 'tiktok') {
+        // TikTok video behavior: thumbnail with play button, then iframe on click
+        const thumbnailContainer = document.createElement('div');
+        thumbnailContainer.className = 'sw-tiktok-thumbnail-container';
+        thumbnailContainer.style.cssText = 'position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; cursor: pointer;';
+        
+        const thumbnail = document.createElement('img');
+        thumbnail.className = 'sw-tiktok-thumbnail';
+        thumbnail.src = post.thumbnail;
+        thumbnail.alt = post.title || '';
+        thumbnail.style.cssText = 'max-width: 100%; max-height: 100%; object-fit: contain;';
+        
+        const playButton = document.createElement('div');
+        playButton.className = 'sw-tiktok-play-button';
+        playButton.innerHTML = '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.7)"/><path d="M24 18L44 32L24 46V18Z" fill="white"/></svg>';
+        playButton.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; cursor: pointer;';
+        
+        thumbnailContainer.appendChild(thumbnail);
+        thumbnailContainer.appendChild(playButton);
+        
+        // Click handler to load iframe
+        thumbnailContainer.addEventListener('click', () => {
+          const iframe = document.createElement('iframe');
+          iframe.src = post.url;
+          iframe.style.cssText = 'width: 100%; height: 100%; border: none; background: #000;';
+          iframe.allowFullscreen = true;
+          iframe.allow = 'autoplay; encrypted-media';
+          
+          media.innerHTML = '';
+          media.appendChild(iframe);
+        });
+        
+        media.appendChild(thumbnailContainer);
+      } else if (post.type === 'VIDEO') {
+        // Other video platforms
         const video = document.createElement('video');
         video.className = 'sw-lightbox-video';
         video.src = post.url;
@@ -67,6 +101,7 @@
         video.muted = true;
         media.appendChild(video);
       } else {
+        // Image
         const img = document.createElement('img');
         img.className = 'sw-lightbox-img';
         img.src = post.thumbnail;
