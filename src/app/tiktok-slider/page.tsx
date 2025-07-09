@@ -42,10 +42,10 @@ export default function SocialWidget() {
       </section>
 
       {/* Widget Section */}
-      <section id="widget-section" className="py-20 sw-widget-wrapper" >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="widget-section" className="py-20 sw-widget-wrappe" >
+        <div className="w-full mx-auto px-4 sm:px-6 ">
           <div className="mb-16">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-7xl mx-auto">
               <div 
                 id="auto-widget-test"
                 className="social-widget"

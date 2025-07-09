@@ -269,6 +269,27 @@
         }
     };
 
+    // Loader dinámico de layouts
+    function loadScriptAndStyle(jsUrl, cssUrl, callback) {
+        // Cargar CSS solo si no está ya cargado
+        if (cssUrl && !document.querySelector(`link[href='${cssUrl}']`)) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = cssUrl;
+            document.head.appendChild(link);
+        }
+        // Cargar JS solo si no está ya cargado
+        if (jsUrl && !document.querySelector(`script[src='${jsUrl}']`)) {
+            const script = document.createElement('script');
+            script.src = jsUrl;
+            script.onload = callback;
+            document.body.appendChild(script);
+        } else if (jsUrl) {
+            // Si ya está cargado, llamar callback inmediatamente
+            callback && callback();
+        }
+    }
+
     // Main SocialWidget object (Singleton pattern like EmbedSocial)
     window.SocialWidget = {
         version: '1.0.0',
@@ -310,12 +331,26 @@
                 .then(data => {
                     utils.removeClass(container, CONFIG.LOADING_CLASS);
                     utils.addClass(container, CONFIG.LOADED_CLASS);
-                    
-                    const renderedWidget = renderer.renderGrid(container, data);
-                    container.innerHTML = '';
-                    container.appendChild(renderedWidget);
-                    
-                    utils.log(`Widget ${widgetId} rendered successfully`);
+                    // Loader dinámico según layout
+                    const layout = data.widget && data.widget.layout ? data.widget.layout : 'grid';
+                    if (layout === 'slider') {
+                        loadScriptAndStyle(
+                            '/social-widget/social-widget-slider.js',
+                            '/social-widget/social-widget-slider.css',
+                            function() {
+                                if (window.SocialWidgetSlider && typeof window.SocialWidgetSlider.render === 'function') {
+                                    window.SocialWidgetSlider.render(container, data);
+                                } else {
+                                    utils.log('Slider renderer not found after loading', 'error');
+                                }
+                            }
+                        );
+                    } else {
+                        const renderedWidget = renderer.renderGrid(container, data);
+                        container.innerHTML = '';
+                        container.appendChild(renderedWidget);
+                        utils.log(`Widget ${widgetId} rendered successfully`);
+                    }
                 })
                 .catch(error => {
                     utils.removeClass(container, CONFIG.LOADING_CLASS);
