@@ -52,7 +52,7 @@ export default function SocialWidget() {
                 data-widget-id="7"
               >
                 {/* Widget will auto-initialize here */}
-                <div className="text-center text-gray-500 py-8">
+                <div className="text-center py-8">
                   
                 </div>
               </div>

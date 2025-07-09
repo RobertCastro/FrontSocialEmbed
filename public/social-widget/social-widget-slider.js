@@ -73,7 +73,7 @@
     // Flechas de navegación
     const left = document.createElement('button');
     left.className = 'sw-slider-arrow sw-slider-arrow-left';
-    left.innerHTML = '<svg width="16" height="28" viewBox="0 0 16 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2.03272L2 14.0327L14 26.0327" stroke="#d6dae4" stroke-opacity="0.8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+    left.innerHTML = '<svg width="16" height="28" viewBox="0 0 16 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2.03272L2 14.0327L14 26.0327" stroke="#000" stroke-opacity="0.8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
     left.onclick = () => {
       if (track.scrollLeft <= 0) {
         // Ir al final (scroll infinito)
@@ -84,7 +84,7 @@
     };
     const right = document.createElement('button');
     right.className = 'sw-slider-arrow sw-slider-arrow-right';
-    right.innerHTML = '<svg width="16" height="28" viewBox="0 0 16 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 26.0005L14 14.0005L2 2.00049" stroke="#d6dae4" stroke-opacity="0.8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+    right.innerHTML = '<svg width="16" height="28" viewBox="0 0 16 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 26.0005L14 14.0005L2 2.00049" stroke="#000" stroke-opacity="0.8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
     right.onclick = () => {
       if (track.scrollLeft + track.offsetWidth >= track.scrollWidth - 5) {
         // Ir al inicio (scroll infinito)

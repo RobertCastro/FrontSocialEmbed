@@ -632,9 +632,6 @@
   
   /* ===== DARK MODE SUPPORT ===== */
   @media (prefers-color-scheme: dark) {
-    .social-widget {
-      color: #e2e8f0;
-    }
     
     
     .sw-grid-container {
@@ -643,15 +640,6 @@
     
     .sw-post-item {
       background: #2d3748;
-    }
-    
-    
-    .sw-metadata {
-      color: #a0aec0;
-    }
-    
-    .sw-loading-container {
-      color: #e2e8f0;
     }
     
     .sw-loading-text {
@@ -664,7 +652,4 @@
       color: #cbd5e0;
     }
     
-    .social-widget.sw-loading {
-      /* background: #2d3748; */
-    }
   }
