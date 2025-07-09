@@ -26,27 +26,14 @@ export default function SocialWidget() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
-                className="bg-pink-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-pink-700 transition-colors"
-                onClick={() => {
-                  document.getElementById('widget-section')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
+                className="bg-pink-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-pink-700 transition-colors">
                 Probar Widget
               </button>
               <button className="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
                 Ver Documentación
               </button>
               <button 
-                className="border border-pink-600 text-pink-600 px-8 py-4 rounded-lg font-semibold hover:bg-pink-50 transition-colors"
-                onClick={() => {
-                  // Manual widget initialization for testing
-                  if (typeof window !== 'undefined' && (window as any).SocialWidget) {
-                    (window as any).SocialWidget.render(1, '#manual-widget-test', {
-                      layout: 'grid'
-                    });
-                  }
-                }}
-              >
+                className="border border-pink-600 text-pink-600 px-8 py-4 rounded-lg font-semibold hover:bg-pink-50 transition-colors">
                 Configurar
               </button>
             </div>
@@ -57,11 +44,7 @@ export default function SocialWidget() {
       {/* Widget Section */}
       <section id="widget-section" className="py-20 sw-widget-wrapper" >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-          </div>
-
           <div className="mb-16">
-         
             <div className="max-w-4xl mx-auto">
               <div 
                 id="auto-widget-test"
@@ -70,16 +53,11 @@ export default function SocialWidget() {
               >
                 {/* Widget will auto-initialize here */}
                 <div className="text-center text-gray-500 py-8">
-                  <p>🔄 Auto-discovery widget loading...</p>
-                  <small>Should initialize automatically when script loads</small>
+                  
                 </div>
               </div>
             </div>
           </div>
-
-         
-
-          
         </div>
       </section>
 
@@ -152,4 +130,4 @@ export default function SocialWidget() {
       />
     </div>
   )
-} 
+}

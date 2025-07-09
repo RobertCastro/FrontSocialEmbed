@@ -1,26 +1,12 @@
 import Link from 'next/link'
+import Header from '../../components/Header'
 
 export default function TermsOfService() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-gray-900">EmbedSocial</h1>
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <Link href="/" className="text-gray-600 hover:text-gray-900 transition-colors">Inicio</Link>
-            </nav>
-            <div className="flex items-center space-x-4">
-              <Link href="/terms-of-service" className="text-sm text-gray-500 hover:text-gray-700">Términos</Link>
-              <Link href="/privacy-policy" className="text-sm text-gray-500 hover:text-gray-700">Privacidad</Link>
-              <Link href="/politica-de-eliminacion-de-datos-de-usuario" className="text-sm text-gray-500 hover:text-gray-700">Datos</Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
+      
 
       {/* Main Content */}
       <main className="flex-1 max-w-2xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
