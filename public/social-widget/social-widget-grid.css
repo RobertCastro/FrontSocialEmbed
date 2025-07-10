@@ -456,10 +456,6 @@
     background: #1a1a1a;
   }
   
-  .sw-post-item {
-    background: var(--sw-black);
-  }
-  
   .sw-loading-text {
     color: #ccc;
   }
