@@ -8,19 +8,17 @@
     // Wrapper principal
     const mainWrapper = document.createElement('div');
     mainWrapper.className = 'sw-slider-main';
-    // Header (logo, usuario, botón)
+    // Header (logo/avatar, usuario, botón)
     const header = document.createElement('div');
     header.className = 'sw-slider-header';
-    // Logo TikTok
-    const iconSVG = account.platform === 'tiktok'
-      ? `<svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="12" fill="#000"/><path d="M28.5 15.5c-2.2 0-4-1.8-4-4V9h-3.1v15.2c0 1.7-1.4 3.1-3.1 3.1s-3.1-1.4-3.1-3.1 1.4-3.1 3.1-3.1c.2 0 .4 0 .6.1v-3.2c-.2 0-.4-.1-.6-.1-3.5 0-6.3 2.8-6.3 6.3s2.8 6.3 6.3 6.3 6.3-2.8 6.3-6.3V19c1.1.7 2.4 1.1 3.7 1.1h.6v-4.6h-.6z" fill="#fff"/></svg>`
-      : `<svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="12" fill="url(#ig)"/><defs><linearGradient id="ig" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#f09433"/><stop offset="0.25" stop-color="#e6683c"/><stop offset="0.5" stop-color="#dc2743"/><stop offset="0.75" stop-color="#cc2366"/><stop offset="1" stop-color="#bc1888"/></linearGradient></defs><path d="M20 13.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zm0 10.7a4.2 4.2 0 1 1 0-8.4 4.2 4.2 0 0 1 0 8.4zm7.2-10.9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" fill="#fff"/></svg>`;
+    // Avatar con fallback a inicial
+    const avatarImg = account.avatarUrl ? `<img src="${account.avatarUrl}" class="sw-slider-avatar" alt="${account.displayName || account.username}" />` : `<div class="sw-slider-avatar-fallback">${(account.displayName || account.username || '?')[0].toUpperCase()}</div>`;
     const accountName = `<span class="sw-slider-account-name">${account.displayName || account.username}</span>`;
     const followUrl = account.platform === 'tiktok'
       ? `https://www.tiktok.com/@${account.username}`
       : `https://instagram.com/${account.username}`;
     const followBtn = `<a href="${followUrl}" target="_blank" rel="noopener" class="sw-slider-follow-btn">Síguenos</a>`;
-    header.innerHTML = `<div class="sw-slider-header-left">${iconSVG}${accountName}</div><div class="sw-slider-header-right">${followBtn}</div>`;
+    header.innerHTML = `<div class="sw-slider-header-left">${avatarImg}${accountName}</div><div class="sw-slider-header-right">${followBtn}</div>`;
     mainWrapper.appendChild(header);
     // Wrapper del slider (track y flechas)
     const wrapper = document.createElement('div');
@@ -38,7 +36,7 @@
       img.src = post.thumbnail;
       img.alt = post.title || '';
       card.appendChild(img);
-      // Overlay inferior (usuario, fecha, logo)
+      // Overlay inferior (avatar, fecha, logo)
       const info = document.createElement('div');
       info.className = 'sw-slider-info';
       let platformIcon = '';
@@ -47,7 +45,8 @@
       } else {
         platformIcon = '<svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="12" fill="url(#ig)"/><defs><linearGradient id="ig" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#f09433"/><stop offset="0.25" stop-color="#e6683c"/><stop offset="0.5" stop-color="#dc2743"/><stop offset="0.75" stop-color="#cc2366"/><stop offset="1" stop-color="#bc1888"/></linearGradient></defs><path d="M20 13.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zm0 10.7a4.2 4.2 0 1 1 0-8.4 4.2 4.2 0 0 1 0 8.4zm7.2-10.9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" fill="#fff"/></svg>';
       }
-      info.innerHTML = `<span class="sw-slider-user">@${account.username}</span><span class="sw-slider-date">${timeAgo(post.timestamp)}</span><span class="sw-slider-platform">${platformIcon}</span>`;
+      const avatarCard = account.avatarUrl ? `<img src="${account.avatarUrl}" class="sw-slider-avatar-card" alt="${account.displayName || account.username}" />` : `<div class="sw-slider-avatar-card-fallback">${(account.displayName || account.username || '?')[0].toUpperCase()}</div>`;
+      info.innerHTML = `<span class="sw-slider-user">${avatarCard}</span><span class="sw-slider-date">${timeAgo(post.timestamp)}</span><span class="sw-slider-platform">${platformIcon}</span>`;
       card.appendChild(info);
       // Overlay play si es video
       if (post.type === 'VIDEO') {
@@ -110,6 +109,10 @@
     }
     function truncate(str, n) {
       return str.length > n ? str.substr(0, n-1) + '…' : str;
+    }
+    // Lightbox avatar: modificar window.SocialWidget.Lightbox para usar account.avatarUrl si existe
+    if (window.SocialWidget && window.SocialWidget.Lightbox) {
+      window.SocialWidget.Lightbox._avatarUrl = account.avatarUrl || '';
     }
   }
 })(); 

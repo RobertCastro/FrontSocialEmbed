@@ -122,11 +122,19 @@
       // Info
       const info = document.createElement('div');
       info.className = 'sw-lightbox-info';
-      // Avatar (placeholder, falta en API)
+      // Avatar con fallback a inicial
       const avatar = document.createElement('div');
       avatar.className = 'sw-lightbox-avatar';
-      avatar.style.background = this.account.platform === 'tiktok' ? 'var(--sw-tiktok)' : 'var(--sw-instagram)';
-      avatar.innerHTML = this.account.username ? this.account.username[0].toUpperCase() : '?';
+      if (this.account.avatarUrl) {
+        const avatarImg = document.createElement('img');
+        avatarImg.src = this.account.avatarUrl;
+        avatarImg.alt = this.account.displayName || this.account.username;
+        avatar.appendChild(avatarImg);
+      } else {
+        // Fallback con inicial
+        avatar.style.background = this.account.platform === 'tiktok' ? 'var(--sw-tiktok)' : 'var(--sw-instagram)';
+        avatar.innerHTML = (this.account.displayName || this.account.username || '?')[0].toUpperCase();
+      }
       // Username
       const username = document.createElement('div');
       username.className = 'sw-lightbox-username';

@@ -139,6 +139,18 @@
   margin-bottom: 12px;
   background: var(--sw-white);
   border: 2px solid var(--sw-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--sw-white);
+}
+.sw-lightbox-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .sw-lightbox-username {
   font-weight: 700;
