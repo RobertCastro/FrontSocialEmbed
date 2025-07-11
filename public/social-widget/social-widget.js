@@ -125,12 +125,33 @@
         init: function() {
             utils.log('Initializing SocialWidget');
             
+            // Load lightbox first
+            this.loadLightbox();
+            
             const widgets = document.querySelectorAll(CONFIG.SELECTOR);
             utils.log(`Found ${widgets.length} widget(s) to initialize`);
             
             widgets.forEach((widget, index) => {
                 this.renderWidget(widget, index);
             });
+        },
+
+        // Load lightbox functionality
+        loadLightbox: function() {
+            // Load lightbox CSS
+            if (!document.querySelector('link[href="/social-widget/social-widget-lightbox.css"]')) {
+                const lightboxCSS = document.createElement('link');
+                lightboxCSS.rel = 'stylesheet';
+                lightboxCSS.href = '/social-widget/social-widget-lightbox.css';
+                document.head.appendChild(lightboxCSS);
+            }
+            
+            // Load lightbox JS
+            if (!document.querySelector('script[src="/social-widget/social-widget-lightbox.js"]')) {
+                const lightboxJS = document.createElement('script');
+                lightboxJS.src = '/social-widget/social-widget-lightbox.js';
+                document.body.appendChild(lightboxJS);
+            }
         },
 
         // Render specific widget
