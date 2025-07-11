@@ -73,7 +73,7 @@
     },
     renderCarousel: function() {
       const post = this.posts[this.currentIndex];
-      const mediaContainer = this.overlay.querySelector('.sw-lightbox-media');
+      const mediaContainer = this.overlay ? this.overlay.querySelector('.sw-lightbox-media') : null;
       if (!mediaContainer || !post.carousel_images) return;
       
       // Clear media container
@@ -207,9 +207,11 @@
         video.style.cssText = 'width: 100%; height: 100%; object-fit: cover;';
         media.appendChild(video);
       } else if (post.type === 'CAROUSEL_ALBUM' && post.platform === 'instagram' && post.carousel_images) {
-        // Instagram carousel
-        this.renderCarousel();
-        media.appendChild(document.createElement('div')); // Placeholder, will be filled by renderCarousel
+        // Instagram carousel - create placeholder for now
+        const placeholder = document.createElement('div');
+        placeholder.className = 'sw-carousel-placeholder';
+        placeholder.style.cssText = 'width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center;';
+        media.appendChild(placeholder);
       } else if (post.type === 'VIDEO') {
         // Other video platforms
         const video = document.createElement('video');
@@ -296,7 +298,10 @@
       
       // If it's a carousel, render it after the overlay is created
       if (post.type === 'CAROUSEL_ALBUM' && post.platform === 'instagram' && post.carousel_images) {
-        this.renderCarousel();
+        // Use setTimeout to ensure the overlay is fully rendered
+        setTimeout(() => {
+          this.renderCarousel();
+        }, 0);
       }
       
       // Keyboard events
