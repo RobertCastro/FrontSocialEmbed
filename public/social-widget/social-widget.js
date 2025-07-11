@@ -193,15 +193,24 @@
                                 }
                             }
                         );
-                    } else if (layout === 'grid') {
+                    } else if (layout === 'grid-2') {
                         loadScriptAndStyle(
-                            '/social-widget/social-widget-grid.js',
-                            '/social-widget/social-widget-grid.css',
+                            '/social-widget/social-widget-grid-2.js',
+                            '/social-widget/social-widget-grid-2.css',
                             function() {
-                                if (window.SocialWidgetGrid && typeof window.SocialWidgetGrid.render === 'function') {
-                                    window.SocialWidgetGrid.render(container, data);
+                                if (typeof window.renderSocialWidgetGrid2 === 'function') {
+                                    // Usar la función renderSocialWidgetGrid2(posts, container, openLightbox)
+                                    // Extraer posts del formato de datos
+                                    const posts = data.posts || [];
+                                    // Función para abrir el lightbox
+                                    function openLightbox(idx) {
+                                        if (window.SocialWidget && window.SocialWidget.Lightbox && typeof window.SocialWidget.Lightbox.open === 'function') {
+                                            window.SocialWidget.Lightbox.open(idx, posts, data.account);
+                                        }
+                                    }
+                                    window.renderSocialWidgetGrid2(posts, container, openLightbox, data.account);
                                 } else {
-                                    utils.log('Grid renderer not found after loading', 'error');
+                                    utils.log('Grid-2 renderer not found after loading', 'error');
                                 }
                             }
                         );
