@@ -449,19 +449,3 @@
     border: 1px solid #ccc;
   }
 }
-
-/* ===== DARK MODE ===== */
-@media (prefers-color-scheme: dark) {
-  .sw-grid-container {
-    background: #1a1a1a;
-  }
-  
-  .sw-loading-text {
-    color: #ccc;
-  }
-  
-  .sw-empty-state {
-    background: #2a2a2a;
-    border-color: #444;
-  }
-} 

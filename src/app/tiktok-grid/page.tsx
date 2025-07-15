@@ -49,7 +49,7 @@ export default function SocialWidget() {
               <div 
                 id="auto-widget-test"
                 className="social-widget"
-                data-widget-id="3"
+                data-widget-id="14"
               >
                 {/* Widget will auto-initialize here */}
                 <div className="text-center text-gray-500 py-8">
