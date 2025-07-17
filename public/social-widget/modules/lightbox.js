@@ -289,6 +289,31 @@
           this.renderCarousel();
         }, 0);
       }
+      // Soporte de swipe/touch en mobile para navegar entre posts
+      if (window.innerWidth <= 700) {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        overlay.addEventListener('touchstart', function(e) {
+          if (e.touches.length === 1) {
+            touchStartX = e.touches[0].clientX;
+          }
+        });
+        overlay.addEventListener('touchmove', function(e) {
+          if (e.touches.length === 1) {
+            touchEndX = e.touches[0].clientX;
+          }
+        });
+        overlay.addEventListener('touchend', (e) => {
+          const deltaX = touchEndX - touchStartX;
+          if (Math.abs(deltaX) > 60) {
+            if (deltaX < 0) {
+              this.next(); // Swipe izquierda: siguiente post
+            } else {
+              this.prev(); // Swipe derecha: post anterior
+            }
+          }
+        });
+      }
     }
   };
 
