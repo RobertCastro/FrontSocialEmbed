@@ -303,16 +303,18 @@
             touchEndX = e.touches[0].clientX;
           }
         });
-        overlay.addEventListener('touchend', (e) => {
+        overlay.addEventListener('touchend', function(e) {
+          // Solo activar swipe si el target es el overlay (no un botón, video, etc.)
+          if (e.target !== overlay) return;
           const deltaX = touchEndX - touchStartX;
           if (Math.abs(deltaX) > 60) {
             if (deltaX < 0) {
-              this.next(); // Swipe izquierda: siguiente post
+              this.next();
             } else {
-              this.prev(); // Swipe derecha: post anterior
+              this.prev();
             }
           }
-        });
+        }.bind(this));
       }
     }
   };
