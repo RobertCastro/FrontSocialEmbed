@@ -8,23 +8,23 @@
 /* ===== GRID CONTAINER ===== */
 .sw-grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding: 20px;
   /* background: var(--sw-bg); */
 }
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .sw-grid-container {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 12px;
-    padding: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 12px;
   }
 }
 @media (max-width: 480px) {
   .sw-grid-container {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    padding: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    padding: 6px;
   }
 }
 
@@ -42,6 +42,22 @@
 .sw-post-item:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.sw-post-item::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(180deg, #0000 40.42%, #000000bf);
+  opacity: 1;
+  transition: opacity 0.3s;
+  border-radius: var(--sw-radius);
+}
+.sw-post-item:hover::before,
+.sw-post-item:focus::before {
+  opacity: 0.85;
 }
 
 .sw-post-image-container {

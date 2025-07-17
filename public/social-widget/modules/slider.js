@@ -62,7 +62,14 @@
         platformIcon = instagramIcon();
       }
       const avatarCard = account.avatarUrl ? `<img src="${account.avatarUrl}" class="sw-slider-avatar-card" alt="${account.displayName || account.username}" />` : `<div class="sw-slider-avatar-card-fallback">${(account.displayName || account.username || '?')[0].toUpperCase()}</div>`;
-      info.innerHTML = `<span class="sw-slider-user">${avatarCard}</span><span class="sw-slider-date">${timeAgo(post.timestamp)}</span><span class="sw-slider-platform">${platformIcon}</span>`;
+      // Username como texto blanco, font-size 14px
+      const usernameText = `<span class='sw-slider-username'>${account.displayName || account.username}</span>`;
+      // Fecha debajo del username
+      const dateText = `<span class="sw-slider-date">${timeAgo(post.timestamp)}</span>`;
+      // Bloque columna: avatar, username, fecha
+      const userBlock = `<span class="sw-slider-userblock">${avatarCard}<span class="sw-slider-usertext">${usernameText}${dateText}</span></span>`;
+      info.innerHTML = `${userBlock}<span class="sw-slider-platform">${platformIcon}</span>`;
+      console.log("POST ", post.timestamp);
       card.appendChild(info);
       // Overlay play si es video
       if (post.type === 'VIDEO') {
@@ -117,11 +124,21 @@
       const now = new Date();
       const date = new Date(dateString);
       const diff = Math.floor((now - date) / 1000);
-      if (diff < 60) return `${diff}s ago`;
-      if (diff < 3600) return `${Math.floor(diff/60)} min ago`;
-      if (diff < 86400) return `${Math.floor(diff/3600)} hours ago`;
-      if (diff < 2592000) return `${Math.floor(diff/86400)} days ago`;
-      return date.toLocaleDateString();
+      if (diff < 60) return `hace ${diff} segundos`;
+      if (diff < 3600) {
+        const mins = Math.floor(diff/60);
+        return `hace ${mins} minuto${mins === 1 ? '' : 's'}`;
+      }
+      if (diff < 86400) {
+        const hours = Math.floor(diff/3600);
+        return `hace ${hours} hora${hours === 1 ? '' : 's'}`;
+      }
+      if (diff < 2592000) {
+        const days = Math.floor(diff/86400);
+        return `hace ${days} día${days === 1 ? '' : 's'}`;
+      }
+      // Si es más de 30 días, muestra la fecha en formato local español
+      return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
     }
     function truncate(str, n) {
       return str.length > n ? str.substr(0, n-1) + '…' : str;

@@ -185,11 +185,21 @@
     const now = new Date();
     const date = new Date(dateString);
     const diff = Math.floor((now - date) / 1000);
-    if (diff < 60) return `${diff}s ago`;
-    if (diff < 3600) return `${Math.floor(diff/60)} min ago`;
-    if (diff < 86400) return `${Math.floor(diff/3600)} hours ago`;
-    if (diff < 2592000) return `${Math.floor(diff/86400)} days ago`;
-    return date.toLocaleDateString();
+    if (diff < 60) return `hace ${diff} segundos`;
+    if (diff < 3600) {
+      const mins = Math.floor(diff/60);
+      return `hace ${mins} minuto${mins === 1 ? '' : 's'}`;
+    }
+    if (diff < 86400) {
+      const hours = Math.floor(diff/3600);
+      return `hace ${hours} hora${hours === 1 ? '' : 's'}`;
+    }
+    if (diff < 2592000) {
+      const days = Math.floor(diff/86400);
+      return `hace ${days} día${days === 1 ? '' : 's'}`;
+    }
+    // Si es más de 30 días, muestra la fecha en formato local español
+    return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
   }
 
   /**
