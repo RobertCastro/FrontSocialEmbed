@@ -1,8 +1,8 @@
-/**
- * Social Widget Renderer - Core Styles
- * Inspired by EmbedSocial CSS architecture with state management
+/*
+ * Social Widget Renderer - Core Styles (Base)
  * Version: 1.0.0
  * Author: Robert Castro
+ * Description: Variables, reset, y estados globales para widgets sociales
  */
 
 /* ===== SOCIAL WIDGET CSS VARIABLES ===== */
@@ -32,255 +32,227 @@
 
 /* ===== CSS RESET & BASE ===== */
 .social-widget {
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    font-size: 14px;
-    line-height: 1.4;
-    /* color: #333; */
-    position: relative;
-    width: 100%;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.social-widget *,
+.social-widget *::before,
+.social-widget *::after {
+  box-sizing: border-box;
+}
+
+/* ===== STATE MANAGEMENT ===== */
+.social-widget {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+.social-widget.sw-loading {
+  min-height: 200px;
+  background: #f8f9fa;
+}
+.social-widget.sw-loaded {
+  opacity: 1;
+}
+.social-widget.sw-error {
+  background: #fff5f5;
+  border: 1px solid #fed7d7;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* ===== LOADING STATES (CSS-only animations) ===== */
+.sw-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+.sw-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f0f0f0;
+  border-top: 3px solid var(--sw-accent);
+  border-radius: 50%;
+  animation: sw-spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+@keyframes sw-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.sw-loading-text {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ===== ERROR STATES ===== */
+.sw-error-container {
+  text-align: center;
+  padding: 30px 20px;
+}
+.sw-error-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+.sw-error-text {
+  margin: 0 0 8px 0;
+  color: #e53e3e;
+  font-weight: 600;
+  font-size: 16px;
+}
+.sw-error-details {
+  margin: 0;
+  color: #a0a0a0;
+  font-size: 12px;
+}
+
+/* ===== WIDGET HEADER (Global) ===== */
+.sw-widget-header {
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+.sw-widget-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+.sw-custom-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  color: #222;
+  padding: 20px 24px;
+}
+.sw-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.sw-account-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #222;
+}
+.sw-header-right {
+  margin-left: auto;
+}
+.sw-follow-btn {
+  background: #3f1866;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(63,24,102,0.08);
+}
+.sw-follow-btn:hover {
+  background: #5e239d;
+}
+
+/* ===== AVATAR STYLES (Global) ===== */
+.sw-header-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+  margin-right: 10px;
+  display: inline-block;
+}
+.sw-header-avatar-fallback {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 10px;
+}
+.sw-post-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  margin-right: 6px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.sw-post-avatar-fallback {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 11px;
+  margin-right: 6px;
+  border: 1px solid #e0e0e0;
+  vertical-align: middle;
+}
+
+/* ===== TODO: Migrar estilos de layouts a modules/ ===== */
+/* Grid, Grid-2, Slider, Lightbox, etc. deben ir en sus respectivos módulos CSS */
+/* Mantener aquí solo lo global y lo necesario para el render inicial y estados */
+
+/* ===== RESPONSIVE DESIGN (Global) ===== */
+@media (max-width: 768px) {
+  .sw-widget-header { padding: 12px 16px; }
+  .sw-widget-title { font-size: 16px; }
+}
+@media (max-width: 480px) {
+  .sw-widget-header { padding: 10px 12px; }
+  .sw-widget-title { font-size: 14px; }
+}
+
+/* ===== ACCESSIBILITY (Global) ===== */
+@media (prefers-reduced-motion: reduce) {
+  .social-widget * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-  
-  .social-widget *,
-  .social-widget *::before,
-  .social-widget *::after {
-    box-sizing: border-box;
+}
+@media (prefers-contrast: high) {
+  .sw-widget-header { border: 2px solid #000; }
+}
+
+/* ===== PRINT STYLES (Global) ===== */
+@media print {
+  .social-widget { break-inside: avoid; }
+}
+
+/* ===== DARK MODE SUPPORT (Global) ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sw-bg: #1a1a1a;
+    --sw-text-main: #fff;
+    --sw-text-muted: #ccc;
+    --sw-border: #333;
   }
-  
-  /* ===== STATE MANAGEMENT (EmbedSocial pattern) ===== */
-  
-  /* Initial state */
-  .social-widget {
-    opacity: 1;
-    transition: opacity 0.3s ease;
-  }
-  
-  /* Loading state */
-  .social-widget.sw-loading {
-    min-height: 200px;
-    background: #f8f9fa;
-  }
-  
-  /* Loaded state */
-  .social-widget.sw-loaded {
-    opacity: 1;
-  }
-  
-  /* Error state */
-  .social-widget.sw-error {
-    background: #fff5f5;
-    border: 1px solid #fed7d7;
-    border-radius: 8px;
-    padding: 20px;
-  }
-  
-  /* ===== LOADING STATES (CSS-only animations) ===== */
-  
-  .sw-loading-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    text-align: center;
-  }
-  
-  .sw-loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid #f0f0f0;
-    border-top: 3px solid var(--sw-accent);
-    border-radius: 50%;
-    animation: sw-spin 1s linear infinite;
-    margin-bottom: 16px;
-  }
-  
-  @keyframes sw-spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  .sw-loading-text {
-    margin: 0;
-    color: #666;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  
-  /* ===== ERROR STATES ===== */
-  
-  .sw-error-container {
-    text-align: center;
-    padding: 30px 20px;
-  }
-  
-  .sw-error-icon {
-    font-size: 32px;
-    margin-bottom: 12px;
-  }
-  
-  .sw-error-text {
-    margin: 0 0 8px 0;
-    color: #e53e3e;
-    font-weight: 600;
-    font-size: 16px;
-  }
-  
-  .sw-error-details {
-    margin: 0;
-    color: #a0a0a0;
-    font-size: 12px;
-  }
-  
-  /* ===== WIDGET WRAPPER ===== */
-  
-  .sw-widget-wrapper {
-    width: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  
-  /* ===== WIDGET HEADER ===== */
-  
-  .sw-widget-header {
-    padding: 16px 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-  }
-  
-  .sw-widget-title {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    text-align: center;
-  }
-  
-  /* ===== WIDGET HEADER CUSTOM ===== */
-  .sw-custom-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #fff;
-    color: #222;
-    padding: 20px 24px;
-  }
-  .sw-header-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .sw-account-name {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #222;
-  }
-  .sw-header-right {
-    margin-left: auto;
-  }
-  .sw-follow-btn {
-    background: #3f1866;
-    color: #fff;
-    border-radius: 8px;
-    padding: 8px 20px;
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: background 0.2s;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(63,24,102,0.08);
-  }
-  .sw-follow-btn:hover {
-    background: #5e239d;
-  }
-  
-  /* ===== AVATAR STYLES ===== */
-  .sw-header-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: #fff;
-    margin-right: 10px;
-    display: inline-block;
-  }
-  .sw-header-avatar-fallback {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 14px;
-    margin-right: 10px;
-  }
-  .sw-post-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: #fff;
-    border: 1px solid #f0f0f0;
-    margin-right: 6px;
-    display: inline-block;
-    vertical-align: middle;
-  }
-  .sw-post-avatar-fallback {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 11px;
-    margin-right: 6px;
-    border: 1px solid #e0e0e0;
-    vertical-align: middle;
-  }
-  
-  /* ===== GRID CONTAINER ===== */
-  /* Grid styles moved to social-widget-grid.css */
-  
-  /* ===== POST ITEMS ===== */
-  /* Post styles moved to social-widget-grid.css */
-  
-  /* ===== POST OVERLAY HOVER CUSTOM ===== */
-  /* Overlay styles moved to social-widget-grid.css */
-  
-  /* ===== PLATFORM ICON ===== */
-  /* Platform icon styles moved to social-widget-grid.css */
-  
-  /* ===== POST METRICS ===== */
-  /* Post metrics styles moved to social-widget-grid.css */
-  
-  /* ===== EMPTY STATE ===== */
-  /* Empty state styles moved to social-widget-grid.css */
-  
-  /* ===== WIDGET FOOTER ===== */
-  /* Widget footer styles moved to social-widget-grid.css */
-  
-  /* ===== RESPONSIVE DESIGN ===== */
-  /* Responsive styles moved to social-widget-grid.css */
-  
-  /* ===== ACCESSIBILITY ===== */
-  /* Accessibility styles moved to social-widget-grid.css */
-  
-  /* ===== REDUCED MOTION ===== */
-  /* Reduced motion styles moved to social-widget-grid.css */
-  
-  /* ===== HIGH CONTRAST MODE ===== */
-  /* High contrast styles moved to social-widget-grid.css */
-  
-  /* ===== PRINT STYLES ===== */
-  /* Print styles moved to social-widget-grid.css */
-  
-  /* ===== DARK MODE SUPPORT ===== */
-  /* Dark mode styles moved to social-widget-grid.css */
+}

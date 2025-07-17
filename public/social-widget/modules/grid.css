@@ -1,0 +1,283 @@
+/*
+ * Social Widget Grid Layout Styles (Módulo)
+ * Version: 1.0.0
+ * Author: Robert Castro
+ * Description: Grid layout styles for social media posts
+ */
+
+/* ===== GRID CONTAINER ===== */
+.sw-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  /* background: var(--sw-bg); */
+}
+@media (max-width: 768px) {
+  .sw-grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+    padding: 16px;
+  }
+}
+@media (max-width: 480px) {
+  .sw-grid-container {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px;
+  }
+}
+
+/* ===== POST ITEMS ===== */
+.sw-post-item {
+  aspect-ratio: 1 / 1;
+  position: relative;
+  border-radius: var(--sw-radius);
+  overflow: hidden;
+  background: var(--sw-white);
+  box-shadow: var(--sw-shadow);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.sw-post-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.sw-post-image-container {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1;
+}
+.sw-post-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== POST OVERLAY ===== */
+.sw-post-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--sw-radius);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.15) 30%,
+    rgba(0, 0, 0, 0.25) 70%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  pointer-events: none;
+}
+.sw-post-item:hover .sw-post-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ===== POST INFO BAR ===== */
+.sw-post-infobar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 14px 16px 10px 16px;
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  background: none;
+  color: var(--sw-white);
+  z-index: 2;
+  font-size: 1rem;
+  min-height: 48px;
+}
+.sw-post-userblock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
+}
+.sw-post-displayname {
+  font-weight: 600;
+  color: var(--sw-white);
+  font-size: 1em;
+  line-height: 1.1;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sw-post-time {
+  font-size: 0.92em;
+  color: var(--sw-text-muted);
+  margin: 0;
+  line-height: 1.1;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sw-post-platform.sw-post-platform-corner {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.sw-post-platform.sw-post-platform-corner svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+/* ===== OVERLAY CONTENT ===== */
+.sw-overlay-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.sw-overlay-center svg {
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+}
+.sw-overlay-desc {
+  color: var(--sw-white);
+  font-weight: 600;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  text-align: center;
+  font-size: 1.08rem;
+  margin-bottom: 18px;
+  max-width: 90%;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sw-overlay-user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--sw-white);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  margin-bottom: 0;
+}
+
+/* ===== EMPTY STATE ===== */
+.sw-empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--sw-text-muted);
+  font-size: 16px;
+}
+.sw-empty-state::before {
+  content: '📷';
+  display: block;
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+/* ===== WIDGET FOOTER ===== */
+.sw-widget-footer {
+  padding: 16px 20px;
+  background: var(--sw-bg);
+  border-top: 1px solid var(--sw-border);
+}
+.sw-metadata {
+  color: var(--sw-text-muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* ===== RESPONSIVE DESIGN (Grid) ===== */
+@media (max-width: 768px) {
+  .sw-post-item {
+    border-radius: var(--sw-radius-sm);
+  }
+  .sw-post-overlay {
+    padding: 8px;
+  }
+  .sw-post-infobar {
+    padding: 10px 12px 8px 12px;
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 480px) {
+  .sw-post-item {
+    border-radius: 8px;
+  }
+  .sw-post-overlay {
+    padding: 6px;
+  }
+  .sw-post-infobar {
+    padding: 8px 10px 6px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+/* ===== ACCESSIBILITY (Grid) ===== */
+.sw-post-item:focus {
+  outline: 2px solid var(--sw-accent);
+  outline-offset: 2px;
+}
+.sw-post-item:focus:not(:focus-visible) {
+  outline: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sw-post-item,
+  .sw-post-item:hover,
+  .sw-post-overlay,
+  .sw-post-image {
+    transition: none;
+  }
+  .sw-post-item:hover {
+    transform: none;
+  }
+  .sw-post-item:hover .sw-post-image {
+    transform: none;
+  }
+}
+@media (prefers-contrast: high) {
+  .sw-post-item {
+    border: 1px solid #000;
+  }
+  .sw-metric {
+    background: #000;
+    color: #fff;
+  }
+}
+
+/* ===== PRINT STYLES (Grid) ===== */
+@media print {
+  .sw-post-overlay,
+  .sw-post-infobar {
+    display: none;
+  }
+  .sw-post-item {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+} 

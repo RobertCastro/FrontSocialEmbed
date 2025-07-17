@@ -1,17 +1,14 @@
 /**
  * Social Widget Renderer - Core Library
+ * Inspired by EmbedSocial architecture but simplified for direct DOM rendering
  * Version: 1.0.0
  * Author: Robert Castro
- * Description: Core library for social media widgets with dynamic module loading
  */
 
 (function() {
     'use strict';
 
-    /**
-     * Configuración global del widget
-     * @type {Object}
-     */
+    // Global configuration
     const CONFIG = {
         API_BASE: 'https://app.ccpapp.xyz',
         API_ENDPOINT: '/social-widgets/render',
@@ -20,24 +17,17 @@
         SELECTOR: '.social-widget',
         LOADING_CLASS: 'sw-loading',
         LOADED_CLASS: 'sw-loaded',
-        ERROR_CLASS: 'sw-error',
-        MODULES_PATH: '/social-widget/modules/' // Nuevo: ruta base para módulos
+        ERROR_CLASS: 'sw-error'
     };
 
-    /**
-     * Utilidades generales
-     */
+    // Utility functions
     const utils = {
-        /**
-         * Log de mensajes con control de debug
-         * @param {string} message
-         * @param {string} type
-         */
         log: function(message, type = 'info') {
             if (CONFIG.DEBUG) {
                 console[type]('[SocialWidget]', message);
             }
         },
+
         debounce: function(func, wait) {
             let timeout;
             return function executedFunction(...args) {
@@ -49,33 +39,30 @@
                 timeout = setTimeout(later, wait);
             };
         },
+
         addClass: function(element, className) {
             if (element && element.classList) {
                 element.classList.add(className);
             }
         },
+
         removeClass: function(element, className) {
             if (element && element.classList) {
                 element.classList.remove(className);
             }
         },
+
         hasClass: function(element, className) {
             return element && element.classList && element.classList.contains(className);
         }
     };
 
-    /**
-     * Cliente para la API del backend
-     */
+    // API Client
     const apiClient = {
-        /**
-         * Obtiene los datos del widget desde la API
-         * @param {string} widgetId
-         * @returns {Promise<Object>}
-         */
         async fetchWidget(widgetId) {
             try {
                 utils.log(`Fetching widget data for ID: ${widgetId}`);
+                
                 const response = await fetch(`${CONFIG.API_BASE}${CONFIG.API_ENDPOINT}/${widgetId}`, {
                     method: 'GET',
                     headers: {
@@ -83,15 +70,20 @@
                         'Accept': 'application/json'
                     }
                 });
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
+
                 const data = await response.json();
+                
                 if (!data.success) {
                     throw new Error(data.message || 'API returned unsuccessful response');
                 }
+
                 utils.log('Widget data fetched successfully', 'info');
                 return data;
+
             } catch (error) {
                 utils.log(`Error fetching widget: ${error.message}`, 'error');
                 throw error;
@@ -99,126 +91,177 @@
         }
     };
 
-    /**
-     * Carga dinámica de módulos JS y CSS
-     * @param {string} jsName - Nombre del archivo JS (sin ruta)
-     * @param {string} cssName - Nombre del archivo CSS (sin ruta)
-     * @param {Function} callback
-     */
-    function loadModule(jsName, cssName, callback) {
+    // Widget Renderer - Removed grid functionality (moved to social-widget-grid.js)
+    const renderer = {
+        // Grid functionality moved to social-widget-grid.js
+    };
+
+    // Loader dinámico de layouts
+    function loadScriptAndStyle(jsUrl, cssUrl, callback) {
         // Cargar CSS solo si no está ya cargado
-        if (cssName && !document.querySelector(`link[href='${CONFIG.MODULES_PATH + cssName}']`)) {
+        if (cssUrl && !document.querySelector(`link[href='${cssUrl}']`)) {
             const link = document.createElement('link');
             link.rel = 'stylesheet';
-            link.href = CONFIG.MODULES_PATH + cssName;
+            link.href = cssUrl;
             document.head.appendChild(link);
         }
         // Cargar JS solo si no está ya cargado
-        if (jsName && !document.querySelector(`script[src='${CONFIG.MODULES_PATH + jsName}']`)) {
+        if (jsUrl && !document.querySelector(`script[src='${jsUrl}']`)) {
             const script = document.createElement('script');
-            script.src = CONFIG.MODULES_PATH + jsName;
+            script.src = jsUrl;
             script.onload = callback;
             document.body.appendChild(script);
-        } else if (jsName) {
+        } else if (jsUrl) {
             // Si ya está cargado, llamar callback inmediatamente
             callback && callback();
         }
     }
 
-    /**
-     * Objeto principal SocialWidget (Singleton)
-     */
+    // Main SocialWidget object (Singleton pattern like EmbedSocial)
     window.SocialWidget = {
         version: '1.0.0',
-
-        /**
-         * Inicializa todos los widgets encontrados en la página
-         */
+        
+        // Initialize all widgets found on page
         init: function() {
             utils.log('Initializing SocialWidget');
-            // Cargar lightbox primero (TODO: migrar a módulo)
+            
+            // Load lightbox first
             this.loadLightbox();
+            
             const widgets = document.querySelectorAll(CONFIG.SELECTOR);
             utils.log(`Found ${widgets.length} widget(s) to initialize`);
+            
             widgets.forEach((widget, index) => {
                 this.renderWidget(widget, index);
             });
         },
 
-        /**
-         * Carga el módulo de lightbox (modularizado)
-         */
+        // Load lightbox functionality
         loadLightbox: function() {
-            // Usar el sistema modularizado
-            loadModule('lightbox.js', 'lightbox.css');
+            // Load lightbox CSS
+            if (!document.querySelector('link[href="/social-widget/social-widget-lightbox.css"]')) {
+                const lightboxCSS = document.createElement('link');
+                lightboxCSS.rel = 'stylesheet';
+                lightboxCSS.href = '/social-widget/social-widget-lightbox.css';
+                document.head.appendChild(lightboxCSS);
+            }
+            
+            // Load lightbox JS
+            if (!document.querySelector('script[src="/social-widget/social-widget-lightbox.js"]')) {
+                const lightboxJS = document.createElement('script');
+                lightboxJS.src = '/social-widget/social-widget-lightbox.js';
+                document.body.appendChild(lightboxJS);
+            }
         },
 
-        /**
-         * Renderiza un widget específico
-         * @param {HTMLElement} container
-         * @param {number} index
-         */
+        // Render specific widget
         renderWidget: function(container, index = 0) {
             if (!container) {
                 utils.log('No container provided for widget rendering', 'error');
                 return;
             }
+
             const widgetId = container.getAttribute('data-widget-id');
             if (!widgetId) {
                 utils.log('No widget-id found in data-widget-id attribute', 'error');
                 this.showError(container, 'Missing widget ID');
                 return;
             }
+
             utils.log(`Rendering widget ${widgetId} in container ${index}`);
-            // Estado loading
+            
+            // Set loading state
             utils.addClass(container, CONFIG.LOADING_CLASS);
             this.showLoading(container);
-            // Fetch y render según layout
+
+            // Fetch and render widget
             apiClient.fetchWidget(widgetId)
                 .then(data => {
                     utils.removeClass(container, CONFIG.LOADING_CLASS);
                     utils.addClass(container, CONFIG.LOADED_CLASS);
-                    // TODO: migrar lógica de layouts a módulos
+                    // Loader dinámico según layout
                     const layout = data.widget && data.widget.layout ? data.widget.layout : 'grid';
                     if (layout === 'slider') {
-                        loadModule('slider.js', 'slider.css', function() {
-                            if (window.SocialWidget && window.SocialWidget.Modules && typeof window.SocialWidget.Modules.Slider?.render === 'function') {
-                                window.SocialWidget.Modules.Slider.render(container, data);
-                            } else {
-                                utils.log('Slider renderer not found after loading', 'error');
+                        loadScriptAndStyle(
+                            '/social-widget/social-widget-slider.js',
+                            '/social-widget/social-widget-slider.css',
+                            function() {
+                                if (window.SocialWidgetSlider && typeof window.SocialWidgetSlider.render === 'function') {
+                                    window.SocialWidgetSlider.render(container, data);
+                                } else {
+                                    utils.log('Slider renderer not found after loading', 'error');
+                                }
                             }
-                        });
+                        );
                     } else if (layout === 'grid-2') {
-                        loadModule('grid-2.js', 'grid-2.css', function() {
-                            if (window.SocialWidget && window.SocialWidget.Modules && typeof window.SocialWidget.Modules.Grid2?.render === 'function') {
-                                window.SocialWidget.Modules.Grid2.render(container, data);
-                            } else {
-                                utils.log('Grid-2 renderer not found after loading', 'error');
+                        loadScriptAndStyle(
+                            '/social-widget/social-widget-grid-2.js',
+                            '/social-widget/social-widget-grid-2.css',
+                            function() {
+                                if (typeof window.renderSocialWidgetGrid2 === 'function') {
+                                    // Usar la función renderSocialWidgetGrid2(posts, container, openLightbox)
+                                    // Extraer posts del formato de datos
+                                    const posts = data.posts || [];
+                                    // Función para abrir el lightbox
+                                    function openLightbox(idx) {
+                                        if (window.SocialWidget && window.SocialWidget.Lightbox && typeof window.SocialWidget.Lightbox.open === 'function') {
+                                            window.SocialWidget.Lightbox.open(idx, posts, data.account);
+                                        }
+                                    }
+                                    window.renderSocialWidgetGrid2(posts, container, openLightbox, data.account);
+                                } else {
+                                    utils.log('Grid-2 renderer not found after loading', 'error');
+                                }
                             }
-                        });
+                        );
                     } else {
-                        // Fallback a grid clásico
-                        loadModule('grid.js', 'grid.css', function() {
-                            if (window.SocialWidget && window.SocialWidget.Modules && typeof window.SocialWidget.Modules.Grid?.render === 'function') {
-                                window.SocialWidget.Modules.Grid.render(container, data);
-                            } else {
-                                utils.log('Grid renderer not found after loading', 'error');
+                        // Fallback to grid for unknown layouts
+                        loadScriptAndStyle(
+                            '/social-widget/social-widget-grid.js',
+                            '/social-widget/social-widget-grid.css',
+                            function() {
+                                if (window.SocialWidgetGrid && typeof window.SocialWidgetGrid.render === 'function') {
+                                    window.SocialWidgetGrid.render(container, data);
+                                } else {
+                                    utils.log('Grid renderer not found after loading', 'error');
+                                }
                             }
-                        });
+                        );
                     }
                 })
                 .catch(error => {
                     utils.removeClass(container, CONFIG.LOADING_CLASS);
                     utils.addClass(container, CONFIG.ERROR_CLASS);
+                    
                     this.showError(container, error.message);
                     utils.log(`Failed to render widget ${widgetId}: ${error.message}`, 'error');
                 });
         },
 
-        /**
-         * Muestra el estado de loading
-         * @param {HTMLElement} container
-         */
+        // Manual render method (for programmatic use)
+        render: function(widgetId, containerSelector, options = {}) {
+            const container = typeof containerSelector === 'string' 
+                ? document.querySelector(containerSelector)
+                : containerSelector;
+                
+            if (!container) {
+                utils.log(`Container not found: ${containerSelector}`, 'error');
+                return;
+            }
+
+            // Set widget ID if not present
+            if (!container.getAttribute('data-widget-id')) {
+                container.setAttribute('data-widget-id', widgetId);
+            }
+
+            // Add social-widget class if not present
+            if (!utils.hasClass(container, 'social-widget')) {
+                utils.addClass(container, 'social-widget');
+            }
+
+            this.renderWidget(container);
+        },
+
         showLoading: function(container) {
             container.innerHTML = `
                 <div class="sw-loading-container">
@@ -228,11 +271,6 @@
             `;
         },
 
-        /**
-         * Muestra el estado de error
-         * @param {HTMLElement} container
-         * @param {string} message
-         */
         showError: function(container, message) {
             container.innerHTML = `
                 <div class="sw-error-container">
@@ -243,14 +281,12 @@
             `;
         },
 
-        /**
-         * Limpia y destruye el widget
-         * @param {string|HTMLElement} containerSelector
-         */
+        // Destroy widget
         destroy: function(containerSelector) {
             const container = typeof containerSelector === 'string' 
                 ? document.querySelector(containerSelector)
                 : containerSelector;
+                
             if (container) {
                 container.innerHTML = '';
                 utils.removeClass(container, CONFIG.LOADING_CLASS);
@@ -260,19 +296,22 @@
         }
     };
 
-    /**
-     * Inicialización automática (auto-discovery)
-     */
+    // Auto-initialization (similar to EmbedSocial's pattern)
     function autoInit() {
         if (CONFIG.AUTO_INIT) {
+            // Try immediate initialization
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', () => {
                     window.SocialWidget.init();
                 });
             } else {
+                // DOM already ready
                 window.SocialWidget.init();
             }
+
+            // Also try after window load (for dynamic content)
             window.addEventListener('load', () => {
+                // Re-scan for any widgets that might have been added dynamically
                 const uninitializedWidgets = document.querySelectorAll(`${CONFIG.SELECTOR}:not(.${CONFIG.LOADED_CLASS}):not(.${CONFIG.LOADING_CLASS}):not(.${CONFIG.ERROR_CLASS})`);
                 if (uninitializedWidgets.length > 0) {
                     utils.log(`Found ${uninitializedWidgets.length} uninitialized widget(s) after window load`);
@@ -284,8 +323,9 @@
         }
     }
 
-    // Inicializar al cargar el script
+    // Initialize when script loads
     autoInit();
+
     utils.log('SocialWidget library loaded successfully');
 
 })();
