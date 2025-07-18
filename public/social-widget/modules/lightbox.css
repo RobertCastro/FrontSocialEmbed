@@ -4,7 +4,7 @@
   z-index: var(--sw-z-modal);
   top: 0; left: 0; right: 0; bottom: 0;
   width: 100vw; height: 100vh;
-  background: rgba(0,0,0,0.72); /* overlay oscuro visible */
+  background: rgba(0,0,0,0.85);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -326,7 +326,6 @@
     width: 24px;
     height: 24px;
   }
-  /* Mobile carousel adjustments */
   .sw-carousel-arrow {
     width: 32px;
     height: 32px;

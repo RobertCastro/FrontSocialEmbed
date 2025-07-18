@@ -32,7 +32,6 @@
     const followUrl = account.platform === 'tiktok'
       ? `https://www.tiktok.com/@${account.username}`
       : `https://instagram.com/${account.username}`;
-    // In the header, update the followBtn to include the icon
     const followBtn = `<a href="${followUrl}" target="_blank" rel="noopener" class="sw-slider-follow-btn">${account.platform === 'tiktok' ? TIKTOK_ICON : INSTAGRAM_ICON} Síguenos</a>`;
     header.innerHTML = `<div class="sw-slider-header-left">${avatarImg}${accountName}</div><div class="sw-slider-header-right">${followBtn}</div>`;
     mainWrapper.appendChild(header);
@@ -62,9 +61,9 @@
         platformIcon = instagramIcon();
       }
       const avatarCard = account.avatarUrl ? `<img src="${account.avatarUrl}" class="sw-slider-avatar-card" alt="${account.displayName || account.username}" />` : `<div class="sw-slider-avatar-card-fallback">${(account.displayName || account.username || '?')[0].toUpperCase()}</div>`;
-      // Username como texto blanco, font-size 14px
+      // Username
       const usernameText = `<span class='sw-slider-username'>${account.displayName || account.username}</span>`;
-      // Fecha debajo del username
+      // Fecha
       const dateText = `<span class="sw-slider-date">${timeAgo(post.timestamp)}</span>`;
       // Bloque columna: avatar, username, fecha
       const userBlock = `<span class="sw-slider-userblock">${avatarCard}<span class="sw-slider-usertext">${usernameText}${dateText}</span></span>`;
@@ -143,7 +142,6 @@
     function truncate(str, n) {
       return str.length > n ? str.substr(0, n-1) + '…' : str;
     }
-    // Lightbox avatar: modificar window.SocialWidget.Lightbox para usar account.avatarUrl si existe
     if (window.SocialWidget && window.SocialWidget.Modules && window.SocialWidget.Modules.Lightbox) {
       window.SocialWidget.Modules.Lightbox._avatarUrl = account.avatarUrl || '';
     }

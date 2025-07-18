@@ -59,7 +59,7 @@
 .sw-grid-2-card-platform {
   margin-left: auto;
   font-size: 1.3rem;
-  color: #222; /* Icono Instagram oscuro */
+  color: #222; /* Icono Instagram */
   display: flex;
   align-items: center;
 }
@@ -78,7 +78,7 @@
   line-clamp: 2;
   box-orient: vertical;
   text-overflow: ellipsis;
-  margin-bottom: 0.5rem; /* Agrega margen entre descripción y foto */
+  margin-bottom: 0.5rem;
 }
 
 .sw-grid-2-card-thumb {
@@ -119,7 +119,7 @@
   align-items: center;
   gap: 0.3rem;
   font-weight: 500;
-  color: #888; /* Mismo color que likes y comentarios */
+  color: #888;
   cursor: pointer;
 }
 

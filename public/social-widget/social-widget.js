@@ -21,7 +21,7 @@
         LOADING_CLASS: 'sw-loading',
         LOADED_CLASS: 'sw-loaded',
         ERROR_CLASS: 'sw-error',
-        MODULES_PATH: '/social-widget/modules/' // Nuevo: ruta base para módulos
+        MODULES_PATH: '/social-widget/modules/'
     };
 
     /**
@@ -84,16 +84,16 @@
                     }
                 });
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    throw new Error(`Error HTTP: ${response.status}`);
                 }
                 const data = await response.json();
                 if (!data.success) {
-                    throw new Error(data.message || 'API returned unsuccessful response');
+                    throw new Error(data.message || 'Error al obtener los datos del widget');
                 }
-                utils.log('Widget data fetched successfully', 'info');
+                utils.log('Datos del widget obtenidos', 'info');
                 return data;
             } catch (error) {
-                utils.log(`Error fetching widget: ${error.message}`, 'error');
+                utils.log(`Error al obtener los datos del widget: ${error.message}`, 'error');
                 throw error;
             }
         }
@@ -135,11 +135,10 @@
          * Inicializa todos los widgets encontrados en la página
          */
         init: function() {
-            utils.log('Initializing SocialWidget');
-            // Cargar lightbox primero (TODO: migrar a módulo)
+            utils.log('Inicializando SocialWidget');
             this.loadLightbox();
             const widgets = document.querySelectorAll(CONFIG.SELECTOR);
-            utils.log(`Found ${widgets.length} widget(s) to initialize`);
+            utils.log(`Encontrados ${widgets.length} widget(s) para inicializar`);
             widgets.forEach((widget, index) => {
                 this.renderWidget(widget, index);
             });
@@ -149,7 +148,6 @@
          * Carga el módulo de lightbox (modularizado)
          */
         loadLightbox: function() {
-            // Usar el sistema modularizado
             loadModule('lightbox.js', 'lightbox.css');
         },
 
@@ -160,16 +158,16 @@
          */
         renderWidget: function(container, index = 0) {
             if (!container) {
-                utils.log('No container provided for widget rendering', 'error');
+                utils.log('No se proporcionó un contenedor para el renderizado del widget', 'error');
                 return;
             }
             const widgetId = container.getAttribute('data-widget-id');
             if (!widgetId) {
-                utils.log('No widget-id found in data-widget-id attribute', 'error');
-                this.showError(container, 'Missing widget ID');
+                utils.log('No se encontró un widget-id en el atributo data-widget-id', 'error');
+                this.showError(container, 'Falta el ID del widget');
                 return;
             }
-            utils.log(`Rendering widget ${widgetId} in container ${index}`);
+            utils.log(`Renderizando widget ${widgetId} en el contenedor ${index}`);
             // Estado loading
             utils.addClass(container, CONFIG.LOADING_CLASS);
             this.showLoading(container);
@@ -178,14 +176,13 @@
                 .then(data => {
                     utils.removeClass(container, CONFIG.LOADING_CLASS);
                     utils.addClass(container, CONFIG.LOADED_CLASS);
-                    // TODO: migrar lógica de layouts a módulos
                     const layout = data.widget && data.widget.layout ? data.widget.layout : 'grid';
                     if (layout === 'slider') {
                         loadModule('slider.js', 'slider.css', function() {
                             if (window.SocialWidget && window.SocialWidget.Modules && typeof window.SocialWidget.Modules.Slider?.render === 'function') {
                                 window.SocialWidget.Modules.Slider.render(container, data);
                             } else {
-                                utils.log('Slider renderer not found after loading', 'error');
+                                utils.log('No se encontró el renderizador de Slider después de cargar', 'error');
                             }
                         });
                     } else if (layout === 'grid-2') {
@@ -193,7 +190,7 @@
                             if (window.SocialWidget && window.SocialWidget.Modules && typeof window.SocialWidget.Modules.Grid2?.render === 'function') {
                                 window.SocialWidget.Modules.Grid2.render(container, data);
                             } else {
-                                utils.log('Grid-2 renderer not found after loading', 'error');
+                                utils.log('No se encontró el renderizador de Grid-2 después de cargar', 'error');
                             }
                         });
                     } else {
@@ -202,7 +199,7 @@
                             if (window.SocialWidget && window.SocialWidget.Modules && typeof window.SocialWidget.Modules.Grid?.render === 'function') {
                                 window.SocialWidget.Modules.Grid.render(container, data);
                             } else {
-                                utils.log('Grid renderer not found after loading', 'error');
+                                utils.log('No se encontró el renderizador de Grid después de cargar', 'error');
                             }
                         });
                     }
@@ -211,7 +208,7 @@
                     utils.removeClass(container, CONFIG.LOADING_CLASS);
                     utils.addClass(container, CONFIG.ERROR_CLASS);
                     this.showError(container, error.message);
-                    utils.log(`Failed to render widget ${widgetId}: ${error.message}`, 'error');
+                    utils.log(`Error al renderizar el widget ${widgetId}: ${error.message}`, 'error');
                 });
         },
 
@@ -223,7 +220,7 @@
             container.innerHTML = `
                 <div class="sw-loading-container">
                     <div class="sw-loading-spinner"></div>
-                    <p class="sw-loading-text">Loading social content...</p>
+                    <p class="sw-loading-text">Cargando contenido...</p>
                 </div>
             `;
         },
@@ -237,7 +234,7 @@
             container.innerHTML = `
                 <div class="sw-error-container">
                     <div class="sw-error-icon">⚠️</div>
-                    <p class="sw-error-text">Failed to load social widget</p>
+                    <p class="sw-error-text">Error al cargar el widget</p>
                     <small class="sw-error-details">${message}</small>
                 </div>
             `;
@@ -275,7 +272,7 @@
             window.addEventListener('load', () => {
                 const uninitializedWidgets = document.querySelectorAll(`${CONFIG.SELECTOR}:not(.${CONFIG.LOADED_CLASS}):not(.${CONFIG.LOADING_CLASS}):not(.${CONFIG.ERROR_CLASS})`);
                 if (uninitializedWidgets.length > 0) {
-                    utils.log(`Found ${uninitializedWidgets.length} uninitialized widget(s) after window load`);
+                    utils.log(`Encontrados ${uninitializedWidgets.length} widget(s) sin inicializar después de la carga de la ventana`);
                     uninitializedWidgets.forEach((widget, index) => {
                         window.SocialWidget.renderWidget(widget, index);
                     });
@@ -286,6 +283,6 @@
 
     // Inicializar al cargar el script
     autoInit();
-    utils.log('SocialWidget library loaded successfully');
+    utils.log('Biblioteca SocialWidget cargada correctamente');
 
 })();

@@ -17,7 +17,7 @@
     account: null,
     isOpen: false,
     overlay: null,
-    carouselIndex: 0, // Para manejar el índice del carousel interno
+    carouselIndex: 0,
     /**
      * Abre el lightbox en el post indicado
      */
@@ -92,7 +92,7 @@
      */
     parseHashtags: function(text) {
       if (!text) return '';
-      // Regex para detectar hashtags (#palabra, incluyendo acentos y unicode)
+      // Regex para detectar hashtags
       const hashtagRegex = /#([\p{L}\p{N}_]+)/gu;
       return text.replace(hashtagRegex, (match, hashtag) => {
         const platform = this.account?.platform || 'tiktok';
@@ -117,8 +117,7 @@
       img.className = 'sw-lightbox-img';
       img.src = post.carousel_images[this.carouselIndex];
       img.alt = post.title || '';
-      // Carousel navigation (sin dots)
-      // Carousel arrows (only show if more than 1 image)
+      // Carousel navigation
       if (post.carousel_images.length > 1) {
         const prevArrow = document.createElement('button');
         prevArrow.className = 'sw-carousel-arrow sw-carousel-arrow-left';
@@ -134,7 +133,6 @@
         carouselContainer.appendChild(nextArrow);
       }
       carouselContainer.appendChild(img);
-      // No dots
       mediaContainer.appendChild(carouselContainer);
     },
     render: function() {
@@ -176,7 +174,7 @@
         });
         media.appendChild(thumbnailContainer);
       } else if (post.type === 'VIDEO' && post.platform === 'instagram' && post.video_url) {
-        // Ajustar el div para que use el aspect-ratio real del video
+        // div usa el aspect-ratio real del video
         media.style.height = '';
         media.style.display = 'flex';
         media.style.alignItems = 'center';
@@ -208,7 +206,7 @@
         // (como en @social-widget-lightbox.js)
         // El bloque de info y el resto del modal se renderizan igual que para otros tipos
         // Después, renderCarousel reemplaza el área de media
-        // (No uses return aquí)
+        // (No usar return aquí)
       } else if (post.type === 'VIDEO') {
         const video = document.createElement('video');
         video.className = 'sw-lightbox-video';
@@ -256,7 +254,6 @@
       } else {
         platformIcon = `<span class="sw-lightbox-platform-icon">${instagramIcon(28)}</span>`;
       }
-      // Estructura: avatar a la izquierda, logo a la derecha
       avatar.innerHTML = `<span class="sw-lightbox-avatar-img">${avatarImg}</span>${platformIcon}`;
       info.appendChild(avatar);
       const username = document.createElement('div');
@@ -265,7 +262,11 @@
       info.appendChild(username);
       const date = document.createElement('div');
       date.className = 'sw-lightbox-date';
-      date.textContent = post.timestamp ? new Date(post.timestamp).toLocaleDateString() : '';
+      if (typeof timeAgo === 'function') {
+        date.textContent = timeAgo(post.timestamp);
+      } else {
+        date.textContent = post.timestamp ? new Date(post.timestamp).toLocaleDateString() : '';
+      }
       info.appendChild(date);
       const desc = document.createElement('div');
       desc.className = 'sw-lightbox-desc';
@@ -283,7 +284,7 @@
       overlay.appendChild(closeBtn);
       this.overlay = overlay;
       document.body.appendChild(overlay);
-      // If it's a carousel, render it after the overlay is created
+      // Si es un carousel, renderizarlo después de que se haya creado el overlay
       if (post.type === 'CAROUSEL_ALBUM' && post.platform === 'instagram' && post.carousel_images) {
         setTimeout(() => {
           this.renderCarousel();
@@ -296,6 +297,7 @@
         overlay.addEventListener('touchstart', function(e) {
           if (e.touches.length === 1) {
             touchStartX = e.touches[0].clientX;
+            touchEndX = touchStartX;
           }
         });
         overlay.addEventListener('touchmove', function(e) {
@@ -304,8 +306,13 @@
           }
         });
         overlay.addEventListener('touchend', function(e) {
-          // Solo activar swipe si el target es el overlay (no un botón, video, etc.)
-          if (e.target !== overlay) return;
+          if (
+            e.target.closest('.sw-lightbox-close') ||
+            e.target.closest('button') ||
+            e.target.closest('video') ||
+            e.target.closest('.sw-carousel-arrow') ||
+            e.target.closest('a.sw-hashtag-link')
+          ) return;
           const deltaX = touchEndX - touchStartX;
           if (Math.abs(deltaX) > 60) {
             if (deltaX < 0) {
@@ -336,4 +343,24 @@ function tiktokIcon(size = 24) {
 }
 function instagramIcon(size = 24) {
   return `<svg width="${size}" height="${size}" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" card-type="media"><path d="M16.5386 5.32888C16.5386 4.66418 15.9999 4.12748 15.3377 4.12748C14.6754 4.12748 14.1362 4.66418 14.1362 5.32888C14.1362 5.99113 14.6754 6.52783 15.3377 6.52783C15.9999 6.52783 16.5386 5.99113 16.5386 5.32888" fill="#ffffff"></path><path d="M18.1388 14.7071C18.0943 15.6822 17.9312 16.212 17.7958 16.5638C17.614 17.0304 17.397 17.364 17.0451 17.7139C16.6972 18.0638 16.3636 18.2802 15.8971 18.4601C15.5452 18.5975 15.0134 18.7611 14.0384 18.8075C12.9843 18.854 12.6719 18.8639 9.99876 18.8639C7.32809 18.8639 7.01325 18.854 5.95911 18.8075C4.98407 18.7611 4.45478 18.5975 4.10288 18.4601C3.63389 18.2802 3.30279 18.0638 2.95289 17.7139C2.60051 17.364 2.38356 17.0304 2.20417 16.5638C2.06873 16.212 1.9032 15.6822 1.86116 14.7071C1.80979 13.653 1.80038 13.3357 1.80038 10.668C1.80038 7.99483 1.80979 7.68 1.86116 6.62586C1.9032 5.65082 2.06873 5.12152 2.20417 4.76666C2.38356 4.30064 2.60051 3.96901 2.95289 3.61912C3.30279 3.26974 3.63389 3.05276 4.10288 2.87091C4.45478 2.73303 4.98407 2.57191 5.95911 2.52547C7.01325 2.47899 7.32809 2.46712 9.99876 2.46712C12.6719 2.46712 12.9843 2.47899 14.0384 2.52547C15.0134 2.57191 15.5452 2.73303 15.8971 2.87091C16.3636 3.05276 16.6972 3.26974 17.0451 3.61912C17.397 3.96901 17.614 4.30064 17.7958 4.76666C17.9312 5.12152 18.0943 5.65082 18.1388 6.62586C18.1877 7.68 18.1996 7.99483 18.1996 10.668C18.1996 13.3357 18.1877 13.653 18.1388 14.7071V14.7071ZM19.9392 6.54384C19.8903 5.47832 19.7222 4.75035 19.4727 4.11631C19.2187 3.45851 18.8781 2.90105 18.3207 2.34359C17.7657 1.78861 17.2082 1.44809 16.5504 1.19111C15.9139 0.943997 15.1884 0.773977 14.1224 0.727534C13.0564 0.676125 12.7159 0.666746 9.99876 0.666746C7.28409 0.666746 6.94112 0.676125 5.87512 0.727534C4.81157 0.773977 4.08657 0.943997 3.44708 1.19111C2.79176 1.44809 2.2343 1.78861 1.67932 2.34359C1.12186 2.90105 0.781338 3.45851 0.524846 4.11631C0.277731 4.75035 0.109714 5.47832 0.0583039 6.54384C0.0118609 7.60984 0 7.95084 0 10.668C0 13.3827 0.0118609 13.7231 0.0583039 14.7891C0.109714 15.8527 0.277731 16.5801 0.524846 17.2172C0.781338 17.8725 1.12186 18.4324 1.67932 18.9874C2.2343 19.5424 2.79176 19.8854 3.44708 20.1419C4.08657 20.389 4.81157 20.557 5.87512 20.606C6.94112 20.6549 7.28409 20.6667 9.99876 20.6667C12.7159 20.6667 13.0564 20.6549 14.1224 20.606C15.1884 20.557 15.9139 20.389 16.5504 20.1419C17.2082 19.8854 17.7657 19.5424 18.3207 18.9874C18.8781 18.4324 19.2187 17.8725 19.4727 17.2172C19.7222 16.5801 19.8903 15.8527 19.9392 14.7891C19.9881 13.7231 20 13.3827 20 10.668C20 7.95084 19.9881 7.60984 19.9392 6.54384V6.54384Z" fill="#ffffff"></path><path d="M9.99877 13.9984C8.15885 13.9984 6.66586 12.5079 6.66586 10.6679C6.66586 8.82504 8.15885 7.33257 9.99877 7.33257C11.8392 7.33257 13.3342 8.82504 13.3342 10.6679C13.3342 12.5079 11.8392 13.9984 9.99877 13.9984V13.9984ZM9.99877 5.52971C7.16253 5.52971 4.86548 7.83169 4.86548 10.6679C4.86548 13.5017 7.16253 15.8013 9.99877 15.8013C12.835 15.8013 15.1346 13.5017 15.1346 10.6679C15.1346 7.83169 12.835 5.52971 9.99877 5.52971Z" fill="#ffffff"></path></svg>`;
+}
+
+function timeAgo(dateString) {
+  const now = new Date();
+  const date = new Date(dateString);
+  const diff = Math.floor((now - date) / 1000);
+  if (diff < 60) return `hace ${diff} segundos`;
+  if (diff < 3600) {
+    const mins = Math.floor(diff/60);
+    return `hace ${mins} minuto${mins === 1 ? '' : 's'}`;
+  }
+  if (diff < 86400) {
+    const hours = Math.floor(diff/3600);
+    return `hace ${hours} hora${hours === 1 ? '' : 's'}`;
+  }
+  if (diff < 2592000) {
+    const days = Math.floor(diff/86400);
+    return `hace ${days} día${days === 1 ? '' : 's'}`;
+  }
+  return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
 } 

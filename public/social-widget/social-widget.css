@@ -216,10 +216,6 @@
   vertical-align: middle;
 }
 
-/* ===== TODO: Migrar estilos de layouts a modules/ ===== */
-/* Grid, Grid-2, Slider, Lightbox, etc. deben ir en sus respectivos módulos CSS */
-/* Mantener aquí solo lo global y lo necesario para el render inicial y estados */
-
 /* ===== RESPONSIVE DESIGN (Global) ===== */
 @media (max-width: 768px) {
   .sw-widget-header { padding: 12px 16px; }

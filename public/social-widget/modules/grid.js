@@ -28,7 +28,7 @@
     // --- HEADER ---
     const header = document.createElement('div');
     header.className = 'sw-widget-header sw-custom-header';
-    // Avatar con fallback a inicial
+    // Avatar con fallback inicial
     const avatarImg = account.avatarUrl ? `<img src="${account.avatarUrl}" class="sw-header-avatar" alt="${account.displayName || account.username}" />` : `<div class="sw-header-avatar-fallback">${(account.displayName || account.username || '?')[0].toUpperCase()}</div>`;
     const accountName = `<span class="sw-account-name">${account.displayName || account.username}</span>`;
     const followUrl = account.platform === 'tiktok'
@@ -42,7 +42,7 @@
     const gridContainer = document.createElement('div');
     gridContainer.className = 'sw-grid-container';
 
-    // Estilos custom (usando variables CSS si aplica)
+    // Estilos custom
     if (widget.settings) {
       const settings = widget.settings;
       if (settings.backgroundColor) {
