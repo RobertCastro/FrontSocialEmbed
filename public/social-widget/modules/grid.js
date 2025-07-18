@@ -75,18 +75,7 @@
 
     widgetWrapper.appendChild(gridContainer);
 
-    // Footer de metadata
-    if (widgetData.metadata) {
-      const footer = document.createElement('div');
-      footer.className = 'sw-widget-footer';
-      footer.innerHTML = `
-        <small class="sw-metadata">
-          ${account.platform} • ${posts.length} posts • 
-          Last updated: ${new Date(widgetData.metadata.lastSync).toLocaleDateString()}
-        </small>
-      `;
-      widgetWrapper.appendChild(footer);
-    }
+
 
     // Avatar para lightbox
     if (window.SocialWidget && window.SocialWidget.Lightbox) {

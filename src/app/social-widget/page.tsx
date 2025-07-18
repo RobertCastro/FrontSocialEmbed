@@ -35,17 +35,7 @@ export default function SocialWidget() {
               <button className="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
                 Ver Documentación
               </button>
-              <button 
-                className="border border-pink-600 text-pink-600 px-8 py-4 rounded-lg font-semibold hover:bg-pink-50 transition-colors"
-                onClick={() => {
-                  // Manual widget initialization for testing
-                  if (typeof window !== 'undefined' && (window as any).SocialWidget) {
-                    (window as any).SocialWidget.render(1, '#manual-widget-test', {
-                      layout: 'grid'
-                    });
-                  }
-                }}
-              >
+              <button className="border border-pink-600 text-pink-600 px-8 py-4 rounded-lg font-semibold hover:bg-pink-50 transition-colors">
                 Configurar
               </button>
             </div>
@@ -64,99 +54,19 @@ export default function SocialWidget() {
               {/* Aquí puedes ver el widget social en acción, conectando con datos reales desde ccpapp.xyz */}
             </p>
             
-            {/* Debug Controls */}
-            <div className="flex flex-wrap gap-4 justify-center mb-8 p-4 bg-gray-50 rounded-lg">
-              {/* <button 
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm"
-                onClick={() => {
-                  if (typeof window !== 'undefined' && (window as any).SocialWidget) {
-                    console.log('SocialWidget available:', (window as any).SocialWidget);
-                    (window as any).SocialWidget.init();
-                  } else {
-                    console.log('SocialWidget not loaded yet');
-                  }
-                }}
-              >
-                🔄 Reinicializar
-              </button>
-              
-              <button 
-                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors text-sm"
-                onClick={() => {
-                  if (typeof window !== 'undefined' && (window as any).SocialWidget) {
-                    (window as any).SocialWidget.render(1, '#manual-widget-test');
-                  }
-                }}
-              >
-                🎨 Render Manual
-              </button>
-              
-              <button 
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm"
-                onClick={() => {
-                  if (typeof window !== 'undefined' && (window as any).SocialWidget) {
-                    (window as any).SocialWidget.destroy('#auto-widget-test');
-                    (window as any).SocialWidget.destroy('#manual-widget-test');
-                  }
-                }}
-              >
-                🗑️ Limpiar
-              </button> */}
-              
-              {/* <button 
-                className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition-colors text-sm"
-                onClick={() => {
-                  // Test API directly
-                  fetch('https://app.ccpapp.xyz/social-widgets/render/1')
-                    .then(res => res.json())
-                    .then(data => {
-                      console.log('API Response:', data);
-                      alert('Check console for API response');
-                    })
-                    .catch(err => {
-                      console.error('API Error:', err);
-                      alert('API Error - check console');
-                    });
-                }}
-              >
-                🔍 Test API
-              </button> */}
-            </div>
+
           </div>
 
-          {/* Auto-discovery Widget */}
+          {/* Widget Demo */}
           <div className="mb-16">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-              {/* 🤖 Auto-Discovery Mode (como EmbedSocial) */}
-            </h3>
             <div className="max-w-4xl mx-auto">
               <div 
-                id="auto-widget-test"
                 className="social-widget"
                 data-widget-id="3"
               >
                 {/* Widget will auto-initialize here */}
                 <div className="text-center text-gray-500 py-8">
-                  <p>🔄 Auto-discovery widget loading...</p>
-                  <small>Should initialize automatically when script loads</small>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Manual Render Widget */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-              ⚙️ Manual Render Mode
-            </h3>
-            <div className="max-w-4xl mx-auto">
-              <div 
-                id="manual-widget-test"
-                className="border-2 border-dashed border-gray-300 min-h-[300px] rounded-lg p-4"
-              >
-                <div className="text-center text-gray-500 py-8">
-                  <p>🎯 Manual render widget</p>
-                  <small>Use the &quot;Render Manual&quot; button above to initialize</small>
+                  <p>🔄 Widget loading...</p>
                 </div>
               </div>
             </div>

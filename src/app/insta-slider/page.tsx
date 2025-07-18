@@ -46,7 +46,6 @@ export default function SocialWidget() {
           <div className="mb-16">
             <div className="max-w-7xl mx-auto">
               <div 
-                id="auto-widget-test"
                 className="social-widget"
                 data-widget-id="15"
               >

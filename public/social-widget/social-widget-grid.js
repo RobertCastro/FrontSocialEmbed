@@ -60,18 +60,7 @@
 
     widgetWrapper.appendChild(gridContainer);
     
-    // Create metadata footer
-    if (widgetData.metadata) {
-      const footer = document.createElement('div');
-      footer.className = 'sw-widget-footer';
-      footer.innerHTML = `
-        <small class="sw-metadata">
-          ${account.platform} • ${posts.length} posts • 
-          Last updated: ${new Date(widgetData.metadata.lastSync).toLocaleDateString()}
-        </small>
-      `;
-      widgetWrapper.appendChild(footer);
-    }
+
 
     // Lightbox avatar: pasar a window.SocialWidget.Lightbox
     if (window.SocialWidget && window.SocialWidget.Lightbox) {

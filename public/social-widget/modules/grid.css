@@ -215,17 +215,7 @@
   opacity: 0.5;
 }
 
-/* ===== WIDGET FOOTER ===== */
-.sw-widget-footer {
-  padding: 16px 20px;
-  background: var(--sw-bg);
-  border-top: 1px solid var(--sw-border);
-}
-.sw-metadata {
-  color: var(--sw-text-muted);
-  font-size: 12px;
-  text-align: center;
-}
+
 
 /* ===== RESPONSIVE DESIGN (Grid) ===== */
 @media (max-width: 768px) {
