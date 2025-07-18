@@ -54,7 +54,7 @@
 }
 .social-widget.sw-loading {
   min-height: 200px;
-  background: #f8f9fa;
+  /* background: #f8f9fa; */
 }
 .social-widget.sw-loaded {
   opacity: 1;
@@ -196,7 +196,7 @@
   object-fit: cover;
   background: #fff;
   border: 1px solid #f0f0f0;
-  margin-right: 6px;
+  margin-right: 3px;
   display: inline-block;
   vertical-align: middle;
 }

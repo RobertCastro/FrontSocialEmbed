@@ -107,7 +107,7 @@
     image.setAttribute('data-src', post.thumbnail);
     image.alt = post.title || 'Social media post';
     image.loading = 'lazy';
-    image.src = 'data:image/svg+xml;utf8,<svg width="300" height="300" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="%23f3f3f3"/><text x="50%" y="50%" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle" dy=".3em">Loading...</text></svg>';
+    image.src = 'data:image/svg+xml;utf8,<svg width="300" height="300" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="%23f3f3f3"/><text x="50%" y="50%" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle" dy=".3em">Cargandot></svg>';
     const actualImage = new window.Image();
     actualImage.onload = function() {
       image.src = post.thumbnail;

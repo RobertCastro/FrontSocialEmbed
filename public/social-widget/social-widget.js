@@ -16,7 +16,7 @@
         API_BASE: 'https://app.ccpapp.xyz',
         API_ENDPOINT: '/social-widgets/render',
         AUTO_INIT: true,
-        DEBUG: true,
+        DEBUG: false,
         SELECTOR: '.social-widget',
         LOADING_CLASS: 'sw-loading',
         LOADED_CLASS: 'sw-loaded',
@@ -220,7 +220,6 @@
             container.innerHTML = `
                 <div class="sw-loading-container">
                     <div class="sw-loading-spinner"></div>
-                    <p class="sw-loading-text">Cargando contenido...</p>
                 </div>
             `;
         },
@@ -231,13 +230,7 @@
          * @param {string} message
          */
         showError: function(container, message) {
-            container.innerHTML = `
-                <div class="sw-error-container">
-                    <div class="sw-error-icon">⚠️</div>
-                    <p class="sw-error-text">Error al cargar el widget</p>
-                    <small class="sw-error-details">${message}</small>
-                </div>
-            `;
+            console.log(message);
         },
 
         /**

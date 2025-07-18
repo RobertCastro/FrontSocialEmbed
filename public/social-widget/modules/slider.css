@@ -204,7 +204,7 @@
   object-fit: cover;
   background: var(--sw-white);
   border: 1px solid #f0f0f0;
-  margin-right: 8px;
+  margin-right: 3px;
   display: inline-block;
   vertical-align: middle;
 }
