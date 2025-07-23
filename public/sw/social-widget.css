@@ -54,15 +54,11 @@
 }
 .social-widget.sw-loading {
   min-height: 200px;
-  /* background: #f8f9fa; */
 }
 .social-widget.sw-loaded {
   opacity: 1;
 }
 .social-widget.sw-error {
-  background: #fff5f5;
-  border: 1px solid #fed7d7;
-  border-radius: 8px;
   padding: 20px;
 }
 

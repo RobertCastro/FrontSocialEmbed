@@ -1,0 +1,11 @@
+{
+  "name": "sw-minify",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "minify": "node minify.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.8"
+  }
+}

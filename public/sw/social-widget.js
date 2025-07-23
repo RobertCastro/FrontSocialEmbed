@@ -21,7 +21,7 @@
         LOADING_CLASS: 'sw-loading',
         LOADED_CLASS: 'sw-loaded',
         ERROR_CLASS: 'sw-error',
-        MODULES_PATH: '/social-widget/modules/'
+        MODULES_PATH: '/sw/min/modules/'
     };
 
     /**
@@ -148,7 +148,7 @@
          * Carga el módulo de lightbox (modularizado)
          */
         loadLightbox: function() {
-            loadModule('lightbox.js', 'lightbox.css');
+            loadModule('lightbox.min.js', 'lightbox.min.css');
         },
 
         /**
@@ -178,7 +178,7 @@
                     utils.addClass(container, CONFIG.LOADED_CLASS);
                     const layout = data.widget && data.widget.layout ? data.widget.layout : 'grid';
                     if (layout === 'slider') {
-                        loadModule('slider.js', 'slider.css', function() {
+                        loadModule('slider.min.js', 'slider.min.css', function() {
                             if (window.SocialWidget && window.SocialWidget.Modules && typeof window.SocialWidget.Modules.Slider?.render === 'function') {
                                 window.SocialWidget.Modules.Slider.render(container, data);
                             } else {
@@ -186,7 +186,7 @@
                             }
                         });
                     } else if (layout === 'grid-2') {
-                        loadModule('grid-2.js', 'grid-2.css', function() {
+                        loadModule('grid-2.min.js', 'grid-2.min.css', function() {
                             if (window.SocialWidget && window.SocialWidget.Modules && typeof window.SocialWidget.Modules.Grid2?.render === 'function') {
                                 window.SocialWidget.Modules.Grid2.render(container, data);
                             } else {
@@ -195,7 +195,7 @@
                         });
                     } else {
                         // Fallback a grid clásico
-                        loadModule('grid.js', 'grid.css', function() {
+                        loadModule('grid.min.js', 'grid.min.css', function() {
                             if (window.SocialWidget && window.SocialWidget.Modules && typeof window.SocialWidget.Modules.Grid?.render === 'function') {
                                 window.SocialWidget.Modules.Grid.render(container, data);
                             } else {

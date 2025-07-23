@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import Script from 'next/script'
 import Header from '../../components/Header'
-import '/public/social-widget/social-widget.css'
+import '/public/sw/min/social-widget.min.css'
 
 export default function SocialWidget() {
   return (
@@ -106,7 +106,7 @@ export default function SocialWidget() {
 
       {/* Load Social Widget Script */}
       <Script 
-        src="/social-widget/social-widget.js" 
+        src="/sw/min/social-widget.min.js" 
         strategy="afterInteractive"
         onLoad={() => {
           console.log('Social Widget script loaded');
